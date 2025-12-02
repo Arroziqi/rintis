@@ -16,17 +16,22 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const getSystemMode = (): ThemeMode =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+  // 1️⃣ SSR-safe init (tanpa localStorage)
+  const [mode, setMode] = useState<ThemeMode>('light');
 
-  const getInitialMode = (): ThemeMode => {
+  // 2️⃣ Sync browser preference setelah mount
+  useEffect(() => {
+    const getSystemMode = (): ThemeMode =>
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
+
     const saved = localStorage.getItem('app-theme-mode') as ThemeMode | null;
-    return saved || getSystemMode();
-  };
+    const initial = saved || getSystemMode();
 
-  const [mode, setMode] = useState<ThemeMode>(getInitialMode());
+    setMode(initial); // update setelah mount
+  }, []);
+
   const theme = getTheme(mode);
 
   const updateDOMTheme = (mode: ThemeMode) => {
@@ -40,14 +45,20 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     updateDOMTheme(newMode);
   };
 
+  // Apply data-theme
   useEffect(() => {
-    updateDOMTheme(mode);
+    if (typeof window !== 'undefined') {
+      updateDOMTheme(mode);
+    }
   }, [mode]);
 
+  // Apply CSS vars
   useEffect(() => {
-    const vars = createCssVars(theme.palette, 'color-');
+    if (typeof window === 'undefined') return;
 
+    const vars = createCssVars(theme.palette, 'color-');
     const root = document.documentElement;
+
     Object.entries(vars).forEach(([key, val]) => {
       root.style.setProperty(key, val);
     });
@@ -58,6 +69,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     document.body.classList.add('theme-ready');
   }, []);
+
+  useEffect(() => {
+    document.body.style.backgroundColor = `var(--color-background-default)`;
+  }, [mode]);
 
   return (
     <ThemeContext.Provider value={{ mode, theme, toggleTheme, setMode }}>
