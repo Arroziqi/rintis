@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ReactNode } from 'react';
 import Sidebar from '@/components/kit/sidebar/Sidebar';
 import Typography from '@/components/Typography';
@@ -23,10 +25,8 @@ const DocsLayout: React.FC<DocsLayoutProps> = ({
         backgroundColor: '#fafafa',
       }}
     >
-      {/* Sidebar */}
       <Sidebar activeId={activeId} />
 
-      {/* Main Content */}
       <main
         style={{
           flex: 1,
@@ -36,7 +36,6 @@ const DocsLayout: React.FC<DocsLayoutProps> = ({
           width: '100%',
         }}
       >
-        {/* Page Header */}
         {(title || description) && (
           <header style={{ marginBottom: '40px' }}>
             {title && (
@@ -56,7 +55,6 @@ const DocsLayout: React.FC<DocsLayoutProps> = ({
           </header>
         )}
 
-        {/* Page Content */}
         <div>{children}</div>
       </main>
     </div>
