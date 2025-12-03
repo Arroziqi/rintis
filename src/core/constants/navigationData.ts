@@ -5,6 +5,12 @@ export const navigationData: NavSection[] = [
     title: 'Foundation',
     items: [
       {
+        id: 'kit',
+        label: 'Rintis Kit',
+        path: '/kit',
+        icon: '🎨',
+      },
+      {
         id: 'useTheme',
         label: 'useTheme',
         path: '/kit/use-theme',
@@ -32,6 +38,17 @@ export const navigationData: NavSection[] = [
       { id: 'tabs', label: 'Tabs', path: '/kit/tabs', icon: '📑' },
       { id: 'table', label: 'Table', path: '/kit/table', icon: '📊' },
       { id: 'logo', label: 'Logo', path: '/kit/logo', icon: '🌿' },
+    ],
+  },
+  {
+    title: 'Common',
+    items: [
+      {
+        id: 'styledFlexDiv',
+        label: 'StyledFlexDiv',
+        path: '/kit/common/styled-flex-div',
+        icon: '📏',
+      },
     ],
   },
   {
