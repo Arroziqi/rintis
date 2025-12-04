@@ -5,10 +5,14 @@ import { lightPalette } from '@/core/theme/styleGuide/color';
 export const StyledPrimaryButton = styled(Link)`
   background-color: ${lightPalette.primary.main};
   border-radius: 100px;
-  padding: 5px 20px 5px 20px;
+  height: 35px;
+  padding: 5px 20px;
   font-size: 8px;
   font-weight: bold;
   color: #fff;
-  line-height: 12px;
-  display: block;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `;
