@@ -3,6 +3,7 @@
 import Card from '@/components/Card';
 import { Chip } from '@/components/Chip';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
+import { StyledFilledInput } from '@/components/input/Input.styled';
 import { ModalCalendar } from '@/components/ModalCalendar';
 import Typography from '@/components/Typography';
 import { Input } from '@/components/ui/input';
@@ -41,14 +42,8 @@ export default function ExpensePage() {
       </StyledFlex>
 
       <StyledFlex width={'100%'} gap={8} align="center">
-        <Input
-          type="text"
-          placeholder="Tambahkan item lainnya"
-          className="text-sm placeholder:text-[12px] placeholder:text-[#9A9A9A] bg-[#F0EEFA] border-none shadow-none focus:ring-0"
-          style={{
-            backgroundColor: '#F0EEFA',
-          }}
-        />
+        <StyledFilledInput placeholder='Tambahkan item lainnya'/>
+        
         <div
           className="flex items-center justify-center w-6 h-6 rounded-full"
           style={{ backgroundColor: lightPalette.primary.light }}
