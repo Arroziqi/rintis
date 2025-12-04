@@ -20,17 +20,17 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [mode, setMode] = useState<ThemeMode>('light');
 
   // 2️⃣ Sync browser preference setelah mount
-  useEffect(() => {
-    const getSystemMode = (): ThemeMode =>
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
+  // useEffect(() => {
+  //   const getSystemMode = (): ThemeMode =>
+  //     window.matchMedia('(prefers-color-scheme: dark)').matches
+  //       ? 'dark'
+  //       : 'light';
 
-    const saved = localStorage.getItem('app-theme-mode') as ThemeMode | null;
-    const initial = saved || getSystemMode();
+  //   const saved = localStorage.getItem('app-theme-mode') as ThemeMode | null;
+  //   const initial = saved || getSystemMode();
 
-    setMode(initial); // update setelah mount
-  }, []);
+  //   setMode(initial); // update setelah mount
+  // }, []);
 
   const theme = getTheme(mode);
 
