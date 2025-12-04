@@ -8,13 +8,7 @@ import { lightPalette } from '@/core/theme/styleGuide/color';
 
 export default function Home() {
   return (
-    <StyledFlex
-      direction={'column'}
-      height={'100%'}
-      align={'center'}
-      justify={'center'}
-      gap={10}
-    >
+    <>
       <Typography variant={'h5'} color={lightPalette.primary.main}>
         Hai, kamu lagi binggung mau mulai bisnis dari mana?{' '}
       </Typography>
@@ -23,11 +17,11 @@ export default function Home() {
         untuk kamu
       </Typography>
       <StyledFlex width={'100%'} justify={'space-between'}>
-        <PrimaryButton href={'/'}>Temukan Bisnismu</PrimaryButton>
-        <SecondaryButton href={'/'}>
+        <PrimaryButton href={'/mulai'}>Temukan Bisnismu</PrimaryButton>
+        <SecondaryButton href={'/kelola'}>
           Sudah Punya Bisnis? Yuk Kelola Bareng!
         </SecondaryButton>
       </StyledFlex>
-    </StyledFlex>
+    </>
   );
 }
