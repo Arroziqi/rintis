@@ -5,7 +5,7 @@ import PrimaryButton from '@/components/button/primary/PrimaryButton';
 
 function TopbarLandingPage() {
   return (
-    <StyledFlex align={'center'} justify={'space-between'}>
+    <StyledFlex align={'start'} justify={'space-between'}>
       <Logo size={'40'} />
       <PrimaryButton href={'/'}>Masuk</PrimaryButton>
     </StyledFlex>
