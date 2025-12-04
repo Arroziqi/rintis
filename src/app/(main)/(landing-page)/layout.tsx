@@ -10,7 +10,7 @@ function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={'max-w-sm p-5 mx-auto min-h-svh h-full w-full'}>
+    <>
       <TopbarLandingPage />
       <StyledFlex
         direction={'column'}
@@ -21,7 +21,7 @@ function Layout({
       >
         {children}
       </StyledFlex>
-    </div>
+    </>
   );
 }
 
