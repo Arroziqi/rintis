@@ -21,3 +21,28 @@ html, body {
 button, a {
     cursor: pointer !important;
 }
+
+select, ::picker(select){
+    appearance: base-select;
+}
+
+@starting-style {
+    select:popover-open::picker(select) {
+        opacity: 0;
+    }
+}
+
+::picker(select){
+    border: none;
+    border-radius: 10px;
+    margin: 8px 0 8px 0;
+}
+
+select::picker-icon {
+    color: #999;
+    transition: 0.4s rotate;
+}
+
+select:open::picker-icon {
+    rotate: 180deg;
+}
