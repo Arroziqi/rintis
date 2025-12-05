@@ -10,7 +10,7 @@ function TopbarLandingPage() {
       <Link href={'/'}>
         <Logo size={'40'} />
       </Link>
-      <PrimaryButton href={'/'}>Masuk</PrimaryButton>
+      <PrimaryButton href={'/login'}>Masuk</PrimaryButton>
     </StyledFlex>
   );
 }
