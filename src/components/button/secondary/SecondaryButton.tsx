@@ -1,16 +1,21 @@
 import React from 'react';
 import { PrimaryButtonProps } from '@/components/button/primary/PrimaryButton.type';
-import { StyledSecondaryButton } from '@/components/button/secondary/SecondaryButton.styled';
+import {
+  StyledSecondaryButton,
+  StyledSecondaryLinkButton,
+} from '@/components/button/secondary/SecondaryButton.styled';
 
 function SecondaryButton({
   children,
   href,
   ...props
 }: Readonly<PrimaryButtonProps>) {
-  return (
-    <StyledSecondaryButton href={href} {...props}>
+  return href ? (
+    <StyledSecondaryLinkButton href={href}>
       {children}
-    </StyledSecondaryButton>
+    </StyledSecondaryLinkButton>
+  ) : (
+    <StyledSecondaryButton {...props}>{children}</StyledSecondaryButton>
   );
 }
 
