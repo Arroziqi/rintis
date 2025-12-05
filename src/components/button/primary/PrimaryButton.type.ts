@@ -1,6 +1,7 @@
-import { LinkProps } from 'next/link';
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { Url } from 'node:url';
 
-export interface PrimaryButtonProps extends LinkProps {
+export interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
+  href?: Url | string;
 }
