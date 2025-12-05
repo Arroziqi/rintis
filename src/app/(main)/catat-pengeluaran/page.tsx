@@ -4,12 +4,11 @@ import Card from '@/components/Card';
 import { Chip } from '@/components/Chip';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import { StyledFilledInput } from '@/components/input/Input.styled';
+import { StyledLabel } from '@/components/input/InputLabel.styled';
 import { ModalCalendar } from '@/components/ModalCalendar';
 import Typography from '@/components/Typography';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { lightPalette } from '@/core/theme/styleGuide/color';
-import { PlusIcon } from 'lucide-react';
+import { CheckIcon, PlusIcon } from 'lucide-react';
 
 export default function ExpensePage() {
   return (
@@ -42,8 +41,8 @@ export default function ExpensePage() {
       </StyledFlex>
 
       <StyledFlex width={'100%'} gap={8} align="center">
-        <StyledFilledInput placeholder='Tambahkan item lainnya'/>
-        
+        <StyledFilledInput placeholder="Tambahkan item lainnya" />
+
         <div
           className="flex items-center justify-center w-6 h-6 rounded-full"
           style={{ backgroundColor: lightPalette.primary.light }}
@@ -54,38 +53,22 @@ export default function ExpensePage() {
 
       <Card type="outlined" className="w-full">
         <Chip type="badge" label="Gula Batu"></Chip>
-        <StyledFlex justify="space-between" gap={10} className='mt-2'>
+        <StyledFlex justify="space-between" gap={10} className="mt-2">
           <div className="w-full max-w-xs space-y-2">
-            <Label htmlFor="expense-qty">
-              <Typography variant={'caption'} weight={'regular'}>
-                Qty
-              </Typography>
-            </Label>
-            <Input
-              id="expense-qty"
-              type="text"
-              placeholder="Qty"
-              className="text-sm placeholder:text-[12px] placeholder:text-[#9A9A9A] bg-[#F0EEFA] border-none shadow-none focus:ring-0"
-              style={{
-                backgroundColor: '#F0EEFA',
-              }}
-            />
+            <StyledLabel htmlFor="expense-qty">Qty</StyledLabel>
+            <StyledFilledInput id="expense-qty" placeholder="Qty" />
           </div>
           <div className="w-full max-w-xs space-y-2">
-            <Label htmlFor="expense-amount">
-              <Typography variant={'caption'} weight={'regular'}>
-                Pengeluaran
-              </Typography>
-            </Label>
-            <Input
-              id="expense-amount"
-              type="text"
-              placeholder="Rp"
-              className="text-sm placeholder:text-[12px] placeholder:text-[#9A9A9A] bg-[#F0EEFA] border-none shadow-none focus:ring-0"
-              style={{
-                backgroundColor: '#F0EEFA',
-              }}
-            />
+            <StyledLabel htmlFor="expense-amount">Pengeluaran</StyledLabel>
+            <StyledFlex gap={10} align='center'>
+              <StyledFilledInput id="expense-amount" placeholder="Rp" />
+              <div
+                className="flex items-center justify-center w-6 h-6 rounded-full p-1"
+                style={{ backgroundColor: lightPalette.primary.light }}
+              >
+                <CheckIcon size={24} color={lightPalette.text.inverse} />
+              </div>
+            </StyledFlex>
           </div>
         </StyledFlex>
       </Card>
@@ -103,13 +86,6 @@ export default function ExpensePage() {
               color={lightPalette.text.primary}
             >
               Bubuk Teh
-            </Typography>
-            <Typography
-              variant="caption"
-              weight="regular"
-              color={lightPalette.text.secondary}
-            >
-              Qty: 500 gram
             </Typography>
           </StyledFlex>
           <StyledFlex

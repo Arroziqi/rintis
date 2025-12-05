@@ -20,7 +20,7 @@ export const StyledFilledInput = styled('input')`
   padding: 10px 15px 10px 15px;
   font-size: 12px;
   line-height: 12px;
-  font-weight: 600;
+  font-weight: 400;
   width: 100%;
 
   &:focus {
