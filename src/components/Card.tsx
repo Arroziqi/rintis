@@ -12,7 +12,7 @@ export default function Card({
   color,
   children,
   className = '',
-}: CardProps) {
+}: Readonly<CardProps>) {
   const base = 'p-5 rounded-[20px]';
 
   return (

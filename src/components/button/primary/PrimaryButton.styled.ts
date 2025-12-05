@@ -16,3 +16,16 @@ export const StyledPrimaryButton = styled(Link)`
   justify-content: center;
   text-align: center;
 `;
+
+export const StyledButton = styled.button`
+  border-radius: 100px;
+  height: 35px;
+  padding: 5px 20px;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;

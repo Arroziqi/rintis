@@ -168,3 +168,30 @@ select::picker-icon {
 select:open::picker-icon {
     rotate: 180deg;
 }
+
+/* ===== Scrollbar Global ===== */
+* {
+    scrollbar-width: thin;                 /* Firefox */
+    scrollbar-color: var(--color-primary-light) #f0e9ff;      /* warna thumb & track di Firefox */
+}
+
+/* ===== Webkit Browsers (Chrome, Edge, Safari) ===== */
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #f0e9ff;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary-light); /* warna thumb */
+    border-radius: 10px;
+    border: 2px solid #f0e9ff; /* biar ada gap */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary-light); /* warna hover */
+}
