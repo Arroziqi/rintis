@@ -1,5 +1,5 @@
 import React from 'react';
-import { MulaiStepType } from '@/app/(landing-page)/mulai/type/Mulai.type';
+import { MulaiStepType } from '@/app/(main)/(landing-page)/mulai/type/Mulai.type';
 import Typography from '@/components/Typography';
 import { lightPalette } from '@/core/theme/styleGuide/color';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
@@ -9,14 +9,14 @@ import { FaArrowUpLong } from 'react-icons/fa6';
 interface MulaiContentProps extends Readonly<MulaiStepType> {
   onNext: () => void;
   isLastStep: boolean;
-  handleClickLastStep?(): void;
+  handleClickLastStep(): void;
 }
 
 function MulaiContent({
-  props,
   onNext,
   isLastStep,
   handleClickLastStep,
+  ...props
 }: Readonly<MulaiContentProps>) {
   const handleClick = () => {
     if (isLastStep) {
@@ -26,7 +26,7 @@ function MulaiContent({
   };
 
   return (
-    <StyledFlex gap={10} direction={'column'} align={'start'}>
+    <StyledFlex width={'100%'} gap={10} direction={'column'} align={'start'}>
       <Typography
         className={'text-start'}
         variant={'h5'}
@@ -40,7 +40,7 @@ function MulaiContent({
       </Typography>
 
       <StyledFlex gap={10} align={'center'} className="w-full pb-[120px]">
-        {props.content}
+        <div className="w-[90%]">{props.content}</div>
         {isLastStep ? (
           <IoIosSearch
             className={'cursor-pointer'}

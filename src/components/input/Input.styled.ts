@@ -10,4 +10,5 @@ export const StyledOutlineInput = styled('input')`
   line-height: 12px;
   font-weight: 600;
   width: 100%;
+  outline-color: ${lightPalette.primary.main};
 `;

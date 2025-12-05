@@ -1,6 +1,7 @@
-import { MulaiStepType } from '@/app/(landing-page)/mulai/type/Mulai.type';
+import { MulaiStepType } from '@/app/(main)/(landing-page)/mulai/type/Mulai.type';
 import { StyledOutlineInput } from '@/components/input/Input.styled';
 import { StyledOption, StyledSelect } from '@/components/select/Select.styled';
+import InputTag from '@/app/(main)/(landing-page)/mulai/components/InputTag';
 
 export const MulaiData: MulaiStepType[] = [
   {
@@ -27,7 +28,7 @@ export const MulaiData: MulaiStepType[] = [
     title: 'Oke,  lanjut',
     description:
       'Bisnis itu harus dinikmati. Kira-kira, kamu lebih enjoy ngerjain yang mana nih?',
-    content: undefined,
+    content: <InputTag />,
   },
   {
     id: 4,

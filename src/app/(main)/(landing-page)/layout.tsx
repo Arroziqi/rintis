@@ -18,6 +18,7 @@ function Layout({
         align={'center'}
         justify={'center'}
         gap={10}
+        width={'100%'}
       >
         {children}
       </StyledFlex>
