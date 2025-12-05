@@ -6,11 +6,15 @@ import Typography from './Typography';
 import { PlusIcon } from 'lucide-react';
 
 export const Chip = ({
+  labelWeight = 'regular',
   label = 'Rekomendasi AI',
   type = 'add',
+  iconLeft,
 }: {
+  labelWeight?: 'regular' | 'bold';
   label?: string;
   type?: 'add' | 'remove' | 'badge';
+  iconLeft?: React.ReactNode;
 }) => {
   const renderIcon = () => {
     if (type === 'add') {
@@ -47,9 +51,10 @@ export const Chip = ({
       }`}
       style={{ backgroundColor: lightPalette.primary.main, height: '30px' }}
     >
+      {iconLeft && <>{iconLeft}</>}
       <Typography
         variant="pixie"
-        weight="regular"
+        weight={labelWeight}
         color={lightPalette.text.inverse}
       >
         {label}

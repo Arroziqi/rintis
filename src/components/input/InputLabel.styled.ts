@@ -5,5 +5,4 @@ export const StyledLabel = styled.label`
   font-weight: 400;
   color: #1a1a1a;
   display: block;
-  margin-bottom: 4px;
 `;
