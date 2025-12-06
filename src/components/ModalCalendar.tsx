@@ -11,8 +11,22 @@ import Typography from './Typography';
 import { lightPalette } from '@/core/theme/styleGuide/color';
 import { Calendar } from './ui/calendar';
 
-export const ModalCalendar = () => {
-  const [date, setDate] = useState<Date | undefined>(new Date());
+interface ModalCalendarProps {
+  onDateSelect?: (date: Date | undefined) => void;
+  defaultDate?: Date;
+}
+
+export const ModalCalendar = ({
+  onDateSelect,
+  defaultDate,
+}: ModalCalendarProps) => {
+  const [date, setDate] = useState<Date | undefined>(defaultDate || new Date());
+
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    setDate(selectedDate);
+    onDateSelect?.(selectedDate);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -42,7 +56,7 @@ export const ModalCalendar = () => {
           <Calendar
             mode="single"
             selected={date}
-            onSelect={setDate}
+            onSelect={handleDateSelect}
             className="[--cell-size:--spacing(11)] md:[--cell-size:--spacing(13)] w-full"
           />
         </div>

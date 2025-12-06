@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getTheme } from '@/core/theme/theme';
 import { createCssVars } from '@/common/utils/createCssVars';
+import { Toaster } from '@/components/ui/sonner';
 
 type ThemeMode = 'light' | 'dark';
 
@@ -77,6 +78,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeContext.Provider value={{ mode, theme, toggleTheme, setMode }}>
       {children}
+      <Toaster />
     </ThemeContext.Provider>
   );
 };
