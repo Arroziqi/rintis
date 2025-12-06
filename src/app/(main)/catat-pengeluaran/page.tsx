@@ -1,17 +1,87 @@
 'use client';
 
+import { useActionState, useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import Card from '@/components/Card';
-import { Chip } from '@/components/Chip';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import { StyledFilledInput } from '@/components/input/Input.styled';
 import { StyledLabel } from '@/components/input/InputLabel.styled';
 import { ModalCalendar } from '@/components/ModalCalendar';
 import Typography from '@/components/Typography';
-import { Button } from '@/components/ui/button';
 import { lightPalette } from '@/core/theme/styleGuide/color';
-import { CheckIcon, PlusIcon } from 'lucide-react';
+import { submitTransaksiAction } from '@/lib/feature/transaksi/transaksi.action';
+import { CheckIcon } from 'lucide-react';
+import { Transaction } from '@/types/TransactionTypes';
+import { fetchAllTransaksi } from '@/lib/feature/transaksi/transaksi.data';
 
 export default function ExpensePage() {
+  const [state, formAction, isPending] = useActionState(
+    submitTransaksiAction,
+    undefined
+  );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
+
+  const [transaksi, setTransaksi] = useState<Transaction[]>([]);
+
+  useEffect(() => {
+    const loadTransaction = async () => {
+      try {
+        const data = await fetchAllTransaksi();
+        setTransaksi(data || []);
+      } catch (error) {
+        console.error('Failed to load transaksi:', error);
+      }
+    };
+    loadTransaction();
+  }, []);
+
+  useEffect(() => {
+    if (state?.success) {
+      const loadTransaction = async () => {
+        try {
+          const data = await fetchAllTransaksi();
+          setTransaksi(data || []);
+        } catch (error) {
+          console.error('Failed to load transaksi:', error);
+        }
+      };
+      loadTransaction();
+    }
+  }, [state?.success]);
+
+  const expenseTransaksi = transaksi.filter(
+    (item) => item.type === 2 || item.type === 3
+  );
+  expenseTransaksi.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+
+  // Show toast when state changes
+  useEffect(() => {
+    if (state?.message) {
+      if (state.success) {
+        toast.success(state.message);
+      } else {
+        toast.error(state.message);
+      }
+    }
+  }, [state?.message, state?.success]);
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDate(date);
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(e.currentTarget);
+    const dateString = selectedDate
+      ? `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`
+      : '';
+    formData.set('date', dateString);
+    formAction(formData);
+  };
+
   return (
     <StyledFlex
       direction={'column'}
@@ -28,57 +98,118 @@ export default function ExpensePage() {
         >
           Catat Pengeluaran
         </Typography>
-        <ModalCalendar />
+        <ModalCalendar
+          onDateSelect={handleDateSelect}
+          defaultDate={selectedDate}
+        />
       </StyledFlex>
 
       <Typography variant={'caption'} weight={'regular'}>
-        Rekomendasi Item yang mungkin sering kamu beli untuk operasional
-        penjualanmu:
+        Catat semua pengeluaran operasionalmu supaya bisa tracking budget!
       </Typography>
 
-      <StyledFlex width={'100%'} gap={8} wrap="wrap">
-        <Chip />
-        <Chip />
-      </StyledFlex>
+      <form onSubmit={handleFormSubmit} className="w-full">
+        <input type="hidden" name="type" value="2" />
 
-      <StyledFlex width={'100%'} gap={8} align="center">
-        <StyledFilledInput placeholder="Tambahkan item lainnya" />
+        <Card type="outlined" className="w-full">
+          <StyledFlex justify="space-between" gap={10} className="w-full">
+            <div className="flex-1 space-y-2">
+              <StyledLabel htmlFor="expense-description">Deskripsi</StyledLabel>
+              <StyledFilledInput
+                id="expense-description"
+                name="desc"
+                placeholder="Nama item pengeluaran"
+                required
+              />
+              {state?.errors?.desc && (
+                <Typography variant={'caption'} color="red">
+                  {state.errors.desc[0]}
+                </Typography>
+              )}
+            </div>
 
-        <Button
-          className="flex items-center justify-center w-6 h-6 rounded-full"
-          style={{ backgroundColor: lightPalette.primary.light }}
-        >
-          <PlusIcon size={24} color={lightPalette.text.inverse} />
-        </Button>
-      </StyledFlex>
-
-      <Card type="outlined" className="w-full">
-        <Chip type="badge" label="Gula Batu" />
-        <StyledFlex justify="space-between" gap={10} className="mt-2">
-          <div className="w-full max-w-xs space-y-2">
-            <StyledLabel htmlFor="expense-qty">Qty</StyledLabel>
-            <StyledFilledInput id="expense-qty" placeholder="Qty" />
-          </div>
-          <div className="w-full max-w-xs space-y-2">
-            <StyledLabel htmlFor="expense-amount">Pengeluaran</StyledLabel>
-            <StyledFlex gap={10} align="center">
-              <StyledFilledInput id="expense-amount" placeholder="Rp" />
-              <div
-                className="flex items-center justify-center w-6 h-6 rounded-full p-1"
-                style={{ backgroundColor: lightPalette.primary.light }}
-              >
-                <CheckIcon size={24} color={lightPalette.text.inverse} />
-              </div>
-            </StyledFlex>
-          </div>
-        </StyledFlex>
-      </Card>
+            <div className="flex-1 space-y-2">
+              <StyledLabel htmlFor="expense-amount">Pengeluaran</StyledLabel>
+              <StyledFlex gap={10} align="center">
+                <StyledFilledInput
+                  id="expense-amount"
+                  name="amount"
+                  placeholder="Rp"
+                  type="number"
+                  min="0"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="flex items-center justify-center w-6 h-6 rounded-full p-1 shrink-0"
+                  style={{ backgroundColor: lightPalette.primary.light }}
+                  disabled={isPending}
+                >
+                  <CheckIcon size={16} color={lightPalette.text.inverse} />
+                </button>
+              </StyledFlex>
+              {state?.errors?.amount && (
+                <Typography variant={'caption'} color="red">
+                  {state.errors.amount[0]}
+                </Typography>
+              )}
+            </div>
+          </StyledFlex>
+        </Card>
+      </form>
 
       <Typography variant={'bodyMedium'} weight={'regular'}>
         Riwayat
       </Typography>
 
-      <Card type="outlined" className="w-full">
+      {expenseTransaksi.length === 0 ? (
+        <Typography variant="caption" color={lightPalette.text.secondary}>
+          Belum ada pengeluaran yang dicatat.
+        </Typography>
+      ) : (
+        expenseTransaksi.map((item) => (
+          <Card key={item.id} type="outlined" className="w-full">
+            <StyledFlex justify="space-between">
+              <StyledFlex direction="column" gap={4} justify="space-between">
+                <Typography
+                  variant="bodySmall"
+                  weight="bold"
+                  color={lightPalette.text.primary}
+                >
+                  {item.name}
+                </Typography>
+              </StyledFlex>
+              <StyledFlex
+                direction="column"
+                gap={4}
+                justify="space-between"
+                align="end"
+              >
+                <Typography
+                  variant="bodyLarge"
+                  weight="regular"
+                  color={lightPalette.error.main}
+                >
+                  Rp {item.amount}
+                </Typography>
+                <Typography
+                  variant="pixie"
+                  weight="regular"
+                  color={lightPalette.text.secondary}
+                >
+                  {new Date(item.date).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </Typography>
+              </StyledFlex>
+            </StyledFlex>
+          </Card>
+        ))
+      )}
+
+      {/* <Card type="outlined" className="w-full">
         <StyledFlex justify="space-between">
           <StyledFlex direction="column" gap={4} justify="space-between">
             <Typography
@@ -118,7 +249,7 @@ export default function ExpensePage() {
             </Typography>
           </StyledFlex>
         </StyledFlex>
-      </Card>
+      </Card> */}
     </StyledFlex>
   );
 }

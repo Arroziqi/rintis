@@ -21,14 +21,15 @@ export const ModalCalendar = ({
   defaultDate,
 }: ModalCalendarProps) => {
   const [date, setDate] = useState<Date | undefined>(defaultDate || new Date());
-
+  const [open, setOpen] = useState(false);
   const handleDateSelect = (selectedDate: Date | undefined) => {
     setDate(selectedDate);
     onDateSelect?.(selectedDate);
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="ghost">
           <Typography
