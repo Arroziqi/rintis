@@ -10,9 +10,10 @@ import { ModalCalendar } from '@/components/ModalCalendar';
 import Typography from '@/components/Typography';
 import { lightPalette } from '@/core/theme/styleGuide/color';
 import { submitTransaksiAction } from '@/lib/feature/transaksi/transaksi.action';
-import { CheckIcon } from 'lucide-react';
+import { CheckIcon, ChevronLeft } from 'lucide-react';
 import { Transaction } from '@/types/TransactionTypes';
 import { fetchAllTransaksi } from '@/lib/feature/transaksi/transaksi.data';
+import Link from 'next/link';
 
 export default function ExpensePage() {
   const [state, formAction, isPending] = useActionState(
@@ -91,13 +92,18 @@ export default function ExpensePage() {
       gap={10}
     >
       <StyledFlex width={'100%'} justify={'space-between'} align="center">
-        <Typography
-          variant={'bodyMedium'}
-          weight="bold"
-          color={lightPalette.text.primary}
-        >
-          Catat Pengeluaran
-        </Typography>
+        <StyledFlex gap={5} align="center">
+          <Link href="/dashboard">
+            <ChevronLeft size={24} color={lightPalette.text.primary} />
+          </Link>
+          <Typography
+            variant={'bodyMedium'}
+            weight="bold"
+            color={lightPalette.text.primary}
+          >
+            Catat Pengeluaran
+          </Typography>
+        </StyledFlex>
         <ModalCalendar
           onDateSelect={handleDateSelect}
           defaultDate={selectedDate}
