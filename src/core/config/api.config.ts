@@ -5,4 +5,6 @@ export const API_ENDPOINTS = {
     REGISTER: '/user/auth/register',
     LOGIN: '/user/auth/login',
   },
+  USERINFO: '/user/info',
+  BALANCE: '/getBalance',
 } as const;
