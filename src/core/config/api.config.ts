@@ -7,5 +7,7 @@ export const API_ENDPOINTS = {
   },
   USERINFO: '/user/info',
   BALANCE: '/getBalance',
+  TRANSAKSI: '/insertTransaksi',
+  GETALLTRANSAKSI: '/getAll',
   GET_BUSINESS_RECOMMENDATIONS: '/getRekomendasiBisnis',
 } as const;
