@@ -16,7 +16,7 @@ export default function Home() {
         Tenang, kita bisa bantu kasih rekomendasi bisnis yang mungkin menarik
         untuk kamu
       </Typography>
-      <StyledFlex width={'100%'} justify={'space-between'}>
+      <StyledFlex width={'100%'} gap={'15px'}>
         <PrimaryButton href={'/mulai'}>Temukan Bisnismu</PrimaryButton>
         <SecondaryButton href={'/kelola'}>
           Sudah Punya Bisnis? Yuk Kelola Bareng!

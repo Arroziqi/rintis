@@ -3,12 +3,13 @@
 import React from 'react';
 import Typography from '@/components/Typography';
 import { lightPalette } from '@/core/theme/styleGuide/color';
-import { HasilData } from '@/app/(main)/(landing-page)/hasil/data/Hasil.data';
 import SuggestionItem from '@/app/(main)/(landing-page)/hasil/components/SuggestionItem';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
+import { useBusinessRecommendation } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
 
 function HasilPage() {
-  const data = HasilData;
+  const { data } = useBusinessRecommendation();
+
   return (
     <StyledFlex
       direction={'column'}
@@ -20,12 +21,12 @@ function HasilPage() {
         Sip, mungkin kamu bisa pertimbangin ini
       </Typography>
       <Typography variant={'caption'} weight={'regular'}>
-        Berdasarkan modal Rp 5.000.000 dan minat Kuliner kamu, kita
+        Berdasarkan modal dan informasi yang telah kamu berikan, kita
         merekomendasikan 3 peluang bisnis yang cocok
       </Typography>
 
-      {data.map((item) => (
-        <SuggestionItem data={item} key={item.businesName} />
+      {data?.data.rekomendasi.map((item) => (
+        <SuggestionItem data={item} key={item.nama_bisnis} />
       ))}
     </StyledFlex>
   );

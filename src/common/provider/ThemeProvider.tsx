@@ -55,7 +55,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Apply CSS vars
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof globalThis.window === 'undefined') return;
 
     const vars = createCssVars(theme.palette, 'color-');
     const root = document.documentElement;
