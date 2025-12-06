@@ -5,6 +5,7 @@ interface CardProps {
   color?: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 export default function Card({
@@ -12,6 +13,7 @@ export default function Card({
   color,
   children,
   className = '',
+  onClick,
 }: Readonly<CardProps>) {
   const base = 'p-5 rounded-[20px]';
 
@@ -19,6 +21,7 @@ export default function Card({
     <div
       className={`${base} ${className} ${type === 'outlined' ? 'border border-gray-300 bg-white' : ''}`}
       style={type === 'fill' ? { backgroundColor: color } : {}}
+      onClick={onClick}
     >
       {children}
     </div>

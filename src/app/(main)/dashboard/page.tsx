@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Card from '@/components/Card';
 import { MultipleLineChart } from '@/components/chart/MultipleLineChart';
 import { Chip } from '@/components/Chip';
@@ -9,6 +10,7 @@ import Typography from '@/components/Typography';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { lightPalette } from '@/core/theme/styleGuide/color';
+import { getUserInfoAction } from '@/lib/feature/user/user.action';
 import {
   Brain,
   EllipsisVertical,
@@ -16,22 +18,56 @@ import {
   TrendingDown,
   TrendingUp,
 } from 'lucide-react';
+import { UserInfo } from '@/types/UserInfoTypes';
+import { getBalanceAction } from '@/lib/feature/balance/balance.action';
+import { redirect } from 'next/navigation';
 
 export default function DashboardPage() {
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [userBalance, setUserBalance] = useState<number>(0);
+
+  useEffect(() => {
+    async function loadUserInfo() {
+      try {
+        const data = await getUserInfoAction();
+        setUserInfo(data);
+      } catch (error) {
+        console.error('Failed to load user info:', error);
+      }
+    }
+    async function loadUserBalance() {
+      try {
+        const balance = await getBalanceAction();
+        setUserBalance(balance || 0);
+      } catch (error) {
+        console.error('Failed to load user balance:', error);
+      }
+    }
+
+    loadUserInfo();
+    loadUserBalance();
+  }, []);
+
+  const displayName = userInfo?.name || 'User';
+  const displayUsername = userInfo?.username || 'username';
+
   return (
     <>
       <StyledFlex justify="space-between" align="center">
         <StyledFlex direction="column">
           <Typography variant={'h5'} color={lightPalette.primary.main}>
-            Hallo, Jane Doe
+            Hallo, {displayName}
           </Typography>
           <Typography variant={'caption'} color={lightPalette.text.disabled}>
             Yuk, kita kelola keuanganmu hari ini!
           </Typography>
         </StyledFlex>
         <Avatar className="w-15 h-15">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage
+            src="https://github.com/shadcn.png"
+            alt={displayUsername}
+          />
+          <AvatarFallback>{displayName.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
       </StyledFlex>
 
@@ -41,12 +77,12 @@ export default function DashboardPage() {
             Kamu punya,
           </Typography>
           <Typography variant={'h5'} color={lightPalette.text.inverse}>
-            Rp 5.000.000
+            Rp {userBalance.toLocaleString('id-ID')}
           </Typography>
         </StyledFlex>
       </Card>
 
-      <StyledFlex direction="column" gap={5} className="mt-5">
+      <StyledFlex direction="column" gap={10} className="mt-5">
         <Typography variant={'caption'} color={lightPalette.text.primary}>
           Daftar item yang wajib untuk jualanmu
         </Typography>
@@ -88,7 +124,14 @@ export default function DashboardPage() {
       </StyledFlex>
 
       <StyledFlex justify="space-between" className="mt-5" gap={20}>
-        <Card type="fill" color="#F0EEFA" className="w-full">
+        <Card
+          type="fill"
+          color="#F0EEFA"
+          className="w-full"
+          onClick={() => {
+            redirect('catat-pemasukan');
+          }}
+        >
           <StyledFlex
             gap={5}
             align="center"
@@ -105,7 +148,14 @@ export default function DashboardPage() {
             </Typography>
           </StyledFlex>
         </Card>
-        <Card type="fill" color="#F0EEFA" className="w-full">
+        <Card
+          type="fill"
+          color="#F0EEFA"
+          className="w-full"
+          onClick={() => {
+            redirect('/catat-pengeluaran');
+          }}
+        >
           <StyledFlex
             gap={5}
             align="center"
