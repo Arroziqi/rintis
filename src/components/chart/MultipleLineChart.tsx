@@ -6,7 +6,6 @@ import {
   ChartTooltipContent,
 } from '../ui/chart';
 
-// 1. Data dari Backend
 const rawData = [
   { outcome: 0.0, income: 22000.0, date: '2025-12-01' },
   { outcome: 34000.0, income: 0.0, date: '2025-12-03' },
