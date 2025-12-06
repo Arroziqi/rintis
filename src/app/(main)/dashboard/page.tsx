@@ -27,10 +27,13 @@ import { getBalanceAction } from '@/lib/feature/balance/balance.action';
 import { redirect } from 'next/navigation';
 import { fetchDailyInsight } from '@/lib/feature/insight/insight.data';
 import { DailyInsight } from '@/types/DailyInsightTypes';
+import { fetchChartData } from '@/lib/feature/chartData/chart.data';
+import ChartData from '@/types/ChartTypes';
 
 export default function DashboardPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [userBalance, setUserBalance] = useState<number>(0);
+  const [chartData, setChartData] = useState<ChartData[] | null>(null);
   const [dailyInsight, setDailyInsight] = useState<DailyInsight[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isDailyInsightLoading, setIsDailyInsightLoading] = useState(true);
@@ -40,7 +43,6 @@ export default function DashboardPage() {
     setIsDailyInsightLoading(true);
     try {
       const insight = await fetchDailyInsight();
-      console.log('Fetched Daily Insight:', insight);
       setDailyInsight(insight);
     } catch (error) {
       console.error('Failed to fetch daily insight:', error);
@@ -70,7 +72,6 @@ export default function DashboardPage() {
       try {
         setIsDailyInsightLoading(true);
         const insight = await fetchDailyInsight();
-        console.log('Fetched Daily Insight:', insight);
         setDailyInsight(insight);
       } catch (error) {
         console.error('Failed to fetch daily insight:', error);
@@ -78,20 +79,26 @@ export default function DashboardPage() {
         setIsDailyInsightLoading(false);
       }
     }
+    async function loadChartData() {
+      try {
+        const data = await fetchChartData();
+        setChartData(data);
+      } catch (error) {
+        console.error('Failed to load chart data:', error);
+      }
+    }
 
     async function loadAllData() {
       try {
-        await Promise.all([loadUserInfo(), loadUserBalance()]);
+        await Promise.all([loadUserInfo(), loadUserBalance(), loadChartData()]);
       } finally {
         setIsLoading(false);
       }
     }
 
-    // Hanya load data jika belum pernah diload sebelumnya
     if (!hasLoadedRef.current) {
       hasLoadedRef.current = true;
       loadAllData();
-      // Generate daily insight di background, tidak perlu ditunggu
       generateDailyInsight();
     } else {
       setIsLoading(false);
@@ -116,7 +123,7 @@ export default function DashboardPage() {
           color={lightPalette.primary.main}
         />
         <Typography variant={'bodyMedium'} color={lightPalette.text.primary}>
-          Memuat data...
+          Tunggu sebentar, memuat data...
         </Typography>
       </StyledFlex>
     );
@@ -246,7 +253,7 @@ export default function DashboardPage() {
       </StyledFlex>
 
       <Card type="outlined" className="w-full mt-5">
-        <MultipleLineChart />
+        {chartData && <MultipleLineChart data={chartData} />}
       </Card>
 
       <StyledFlex align="center" className="mt-5 mb-2" gap={10}>

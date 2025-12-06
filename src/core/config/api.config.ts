@@ -11,4 +11,5 @@ export const API_ENDPOINTS = {
   GETALLTRANSAKSI: '/getAll',
   DAILYINSIGHT: '/getInsight',
   GET_BUSINESS_RECOMMENDATIONS: '/getRekomendasiBisnis',
+  GETCHARTDATA: '/getDataBar',
 } as const;
