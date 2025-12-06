@@ -10,4 +10,5 @@ export const API_ENDPOINTS = {
   TRANSAKSI: '/insertTransaksi',
   GETALLTRANSAKSI: '/getAll',
   DAILYINSIGHT: '/getInsight',
+  GET_BUSINESS_RECOMMENDATIONS: '/getRekomendasiBisnis',
 } as const;

@@ -3,6 +3,7 @@
 import React from 'react';
 import TopbarLandingPage from '@/components/topbar/topbarLandingPage/TopbarLandingPage';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
+import { BusinessRecommendationProvider } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
 
 function Layout({
   children,
@@ -10,7 +11,7 @@ function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <BusinessRecommendationProvider>
       <TopbarLandingPage />
       <StyledFlex
         direction={'column'}
@@ -23,7 +24,7 @@ function Layout({
       >
         {children}
       </StyledFlex>
-    </>
+    </BusinessRecommendationProvider>
   );
 }
 
