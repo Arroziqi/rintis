@@ -1,11 +1,12 @@
 'use server';
 
-import { getAuthToken } from '@/lib/auth';
 import { API_BASE_URL, API_ENDPOINTS } from '@/core/config/api.config';
+import { getAuthToken } from '@/lib/auth';
+import { Transaction } from '@/types/TransactionTypes';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export async function fetchBalance(): Promise<number | null> {
+export async function fetchAllTransaksi() {
   try {
     const token = await getAuthToken();
 
@@ -13,7 +14,7 @@ export async function fetchBalance(): Promise<number | null> {
       return null;
     }
 
-    const url = `${API_BASE_URL}${API_ENDPOINTS.BALANCE}`;
+    const url = `${API_BASE_URL}${API_ENDPOINTS.GETALLTRANSAKSI}`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -35,18 +36,14 @@ export async function fetchBalance(): Promise<number | null> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(
-        'Failed to fetch user balance:',
-        response.status,
-        errorText
-      );
+      console.error('Failed to fetch transaksi:', response.status, errorText);
       return null;
     }
 
     const data = await response.json();
-    return data as number;
+    return data as Transaction[];
   } catch (error) {
-    console.error('Error fetching balance:', error);
+    console.error('Error fetching transaksi:', error);
     return null;
   }
 }
