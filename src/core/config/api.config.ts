@@ -9,4 +9,5 @@ export const API_ENDPOINTS = {
   BALANCE: '/getBalance',
   TRANSAKSI: '/insertTransaksi',
   GETALLTRANSAKSI: '/getAll',
+  DAILYINSIGHT: '/getInsight',
 } as const;
