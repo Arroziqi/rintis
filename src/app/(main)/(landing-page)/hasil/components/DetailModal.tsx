@@ -1,62 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { SuggestionItemDetail } from '@/app/(main)/(landing-page)/hasil/type/Hasil.type';
+import React from 'react';
 import { Modal, ModalProps } from '@/components/modal/Modal';
-import useStepper from '@/components/stepper/hooks/useStepper';
-import Stepper from '@/components/stepper/Stepper';
-import CategoryPillStepperIndicator from '@/components/stepper/indicators/PillStepperIndicatorCategory';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import Typography from '@/components/Typography';
 import { StyledButton } from '@/components/button/primary/PrimaryButton.styled';
+import { IBusinessDetail } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
 
 interface DetailModalProps extends ModalProps {
-  data: SuggestionItemDetail[];
+  data: IBusinessDetail;
 }
 
 function DetailModal({ data, ...props }: Readonly<DetailModalProps>) {
-  const [stepperKey, setStepperKey] = useState(0);
-  const { currentStep, goToStep, reset } = useStepper({
-    totalSteps: data.length,
-    initialStep: 0,
-  });
-
-  // Reset stepper ketika modal dibuka
-  useEffect(() => {
-    if (props.isOpen) {
-      reset();
-      setStepperKey((prev) => prev + 1);
-    }
-  }, [props.isOpen, reset]);
-
-  // Extract categories dari data
-  const categories = data.map((item) => item.category);
-
-  const handleStepClick = (step: number) => {
-    console.log('Step clicked:', step, 'Category:', data[step]?.category);
-    goToStep(step);
-  };
-
-  const stepContents = data.map((item, index) => (
-    <StyledFlex
-      key={`${item.category}-${index}`}
-      className="p-6 pb-0 animate-fade-in"
-      style={{ animationDelay: `${index * 0.1}s` }}
-      direction={'column'}
-      gap={'15px'}
-    >
+  const content = (
+    <>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}>Omzet Harian</Typography>
-        <Typography variant={'pixie'}>{item.dailyTurnover}</Typography>
+        <Typography variant={'pixie'}>{data.estimasi_omset_harian}</Typography>
       </StyledFlex>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}>HPP/Modal</Typography>
-        <Typography variant={'pixie'}>{item.hpp}</Typography>
+        <Typography variant={'pixie'}>{data.estimasi_hpp}</Typography>
       </StyledFlex>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}>Profit</Typography>
-        <Typography variant={'pixie'}>{item.profit}</Typography>
+        <Typography variant={'pixie'}>{data.profit_harian}</Typography>
       </StyledFlex>
 
-      {item.note && <Typography variant={'pixie'}>⚠️ {item.note}</Typography>}
+      {data.pro && <Typography variant={'pixie'}>✅ {data.pro}</Typography>}
+      {data.kontra && (
+        <Typography variant={'pixie'}>⚠️ {data.kontra}</Typography>
+      )}
 
       <StyledButton
         className={'mt-5 w-fit self-center'}
@@ -64,25 +36,12 @@ function DetailModal({ data, ...props }: Readonly<DetailModalProps>) {
       >
         Pilih Bisnis
       </StyledButton>
-    </StyledFlex>
-  ));
+    </>
+  );
 
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose} header={props.header}>
-      {/* Stepper Indicator dengan Category */}
-      <div className="mt-6 flex justify-center">
-        <CategoryPillStepperIndicator
-          key={`category-indicator-${stepperKey}`}
-          currentStep={currentStep}
-          categories={categories}
-          onStepClick={handleStepClick}
-        />
-      </div>
-
-      {/* Stepper Content */}
-      <Stepper key={stepperKey} currentStep={currentStep}>
-        {stepContents}
-      </Stepper>
+      {content}
     </Modal>
   );
 }

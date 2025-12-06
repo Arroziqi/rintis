@@ -1,16 +1,15 @@
 import React from 'react';
 import Typography from '@/components/Typography';
 import Card from '@/components/Card';
-import { StyledNote } from '@/components/note/Note.styled';
-import { SuggestionItemType } from '@/app/(main)/(landing-page)/hasil/type/Hasil.type';
 import { lightPalette } from '@/core/theme/styleGuide/color';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import { StyledButton } from '@/components/button/primary/PrimaryButton.styled';
 import { useModal } from '@/components/modal/hooks/useModal';
 import DetailModal from '@/app/(main)/(landing-page)/hasil/components/DetailModal';
+import { IBusinessRecommendation } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
 
 interface SuggestionItemProps {
-  data: SuggestionItemType;
+  data: IBusinessRecommendation;
 }
 
 function SuggestionItem({ data }: Readonly<SuggestionItemProps>) {
@@ -24,7 +23,7 @@ function SuggestionItem({ data }: Readonly<SuggestionItemProps>) {
           variant={'bodySmall'}
           weight={'regular'}
         >
-          {data.insight}
+          {data.explanation}
         </Typography>
         <Card
           type={'fill'}
@@ -32,15 +31,15 @@ function SuggestionItem({ data }: Readonly<SuggestionItemProps>) {
           className={'flex flex-col gap-[15px]'}
         >
           <Typography component={'p'} variant={'caption'} weight={'bold'}>
-            {data.businesName}
+            {data.nama_bisnis}
           </Typography>
           <Typography component={'p'} variant={'caption'} weight={'regular'}>
             {data.description}
           </Typography>
           <Typography component={'p'} variant={'caption'} weight={'regular'}>
-            Modal awal Rp ${data.initialCapital}
+            Modal awal Rp ${data.estimasi_modal}
           </Typography>
-          {data.note && <StyledNote>{data.note}</StyledNote>}
+          {/*{data.note && <StyledNote>{data.note}</StyledNote>}*/}
 
           <StyledButton
             onClick={openModal}
@@ -52,10 +51,10 @@ function SuggestionItem({ data }: Readonly<SuggestionItemProps>) {
       </StyledFlex>
 
       <DetailModal
-        data={data.details}
+        data={data.info_lain}
         isOpen={isOpen}
         onClose={closeModal}
-        header={data.businesName}
+        header={data.nama_bisnis}
       >
         Ini kontennya
       </DetailModal>
