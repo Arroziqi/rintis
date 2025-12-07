@@ -7,9 +7,10 @@ import { lightPalette } from '@/core/theme/styleGuide/color';
 
 interface BalanceCardProps {
   balance: number;
+  labaRugi: number;
 }
 
-export function BalanceCard({ balance }: BalanceCardProps) {
+export function BalanceCard({ balance, labaRugi }: BalanceCardProps) {
   return (
     <Card type="fill" color="#B29CFF" className="mt-5">
       <StyledFlex direction="column" gap={5}>
@@ -20,6 +21,9 @@ export function BalanceCard({ balance }: BalanceCardProps) {
           Rp {balance.toLocaleString('id-ID')}
         </Typography>
       </StyledFlex>
+      <Typography variant={'caption'} color={lightPalette.text.inverse}>
+        Laba rugi kamu, Rp {labaRugi.toLocaleString('id-ID')}
+      </Typography>
     </Card>
   );
 }

@@ -12,12 +12,13 @@ import { ItemListSection } from '@/components/dashboard/ItemListSection';
 import { ActionCards } from '@/components/dashboard/ActionCards';
 import { DailyInsightSection } from '@/components/dashboard/DailyInsightSection';
 import { useEffect } from 'react';
-import { useFlowExecutor } from '@/app/(main)/dashboard/hooks/useFlowExecutor';
+import { useFlowExecutor } from '@/hooks/useFlowExecutor';
 
 export default function DashboardPage() {
   const {
     userInfo,
     userBalance,
+    labaRugi,
     chartData,
     itemList,
     dailyInsight,
@@ -91,7 +92,7 @@ export default function DashboardPage() {
         name={displayName}
         username={displayUsername}
       />
-      <BalanceCard balance={userBalance} />
+      <BalanceCard balance={userBalance} labaRugi={labaRugi} />
       {managedItemList && managedItemList.length > 0 && (
         <ItemListSection
           itemList={managedItemList}

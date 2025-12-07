@@ -1,276 +1,253 @@
-# RINTIS - Design System & Component Library
+# 🚀 RINTIS
 
-## 📋 Overview
-**RINTIS** is a modern design system and component library built with **Next.js 14**, **TypeScript**, and **Styled Components**. It provides a comprehensive set of reusable UI components with consistent styling, accessibility standards, and developer-friendly APIs.
+> **Your Smart Business Companion** - From Dreams to Reality with AI-Powered Insights
 
-## 🏗️ Project Architecture
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Platform](https://img.shields.io/badge/platform-Mobile%20First-brightgreen.svg)
 
-### Directory Structure
-```
-src/
-├── app/                          # Next.js 14 App Router
-│   ├── (landing-page)/          # Marketing/landing pages
-│   └── kit/                     # Design system documentation
-│       ├── colors/              # Color system documentation
-│       ├── common/              # Common components docs
-│       │   └── styled-flex-div/ # StyledFlex documentation
-│       ├── logo/                # Logo usage guidelines
-│       ├── typography/          # Typography system
-│       └── use-theme/          # Theme hook documentation
-│
-├── common/                      # Shared utilities & configurations
-│   ├── hooks/                   # Custom React hooks
-│   ├── provider/                # Context providers
-│   ├── styles/                  # Global styles & CSS
-│   ├── types/                   # TypeScript type definitions
-│   └── utils/                   # Utility functions
-│
-├── components/                  # UI Components
-│   ├── button/                  # Button components
-│   │   ├── primary/            # Primary button variant
-│   │   └── secondary/          # Secondary button variant
-│   │
-│   ├── common/                  # Common/utility components
-│   │   └── styledFlexDiv/      # Flexible layout component
-│   │
-│   ├── kit/                     # Design system components
-│   │   ├── layouts/            # Layout components (DocsLayout, etc.)
-│   │   ├── logo/               # Logo component
-│   │   └── sidebar/            # Navigation sidebar
-│   │
-│   └── topbar/                  # Top navigation components
-│       └── topbarLandingPage/  # Landing page specific topbar
-│
-└── core/                       # Core system files
-    ├── assets/                  # Static assets
-    ├── config/                  # Application configuration
-    ├── constants/               # App constants
-    └── theme/                   # Theme configuration
-        └── styleGuide/         # Design tokens & style guide
-```
+---
 
-## 🎨 Design System Components
+## 📱 What is Rintis?
 
-### 1. **StyledFlex Component** (`/src/components/common/styledFlexDiv/`)
-A powerful flexbox container with extensive customization:
-- **Flexbox Properties**: `direction`, `justify`, `align`, `wrap`
-- **Spacing Utilities**: `gap`, `rowGap`, `columnGap`
-- **Styling Props**: `background`, `borderRadius`, `boxShadow`
-- **Size Control**: `width`, `height`, `padding`, `margin`
-- **Responsive**: Built-in responsive design support
-- **Type Safety**: Full TypeScript support with strict prop types
+**Rintis** is a revolutionary mobile-first web application designed to help entrepreneurs and business owners navigate their journey with confidence. Whether you're a complete beginner wondering "what business should I start?" or an established business owner managing finances, Rintis provides intelligent AI-powered guidance every step of the way.
 
-### 2. **Typography System** (`/src/app/kit/typography/`)
-Comprehensive typography with:
-- **Headings**: h1-h6 with consistent scaling
-- **Body Text**: Large, Medium, Small variants
-- **Small Text**: Caption and Pixie variants
-- **Font Weights**: Regular and Bold
-- **Italic Support**: Font style variations
-- **Alignment**: Text alignment utilities
+### Perfect For:
+- 🌱 **Aspiring Entrepreneurs** - Unsure where to start but ready to launch
+- 💼 **New Business Owners** - Need strategic direction and guidance
+- 📊 **Existing Businesses** - Looking to streamline operations and financial management
+- 💡 **Anyone with Ideas** - Have capital but need a roadmap
 
-### 3. **Color System** (`/src/app/kit/colors/`)
-Organized color palette with:
-- Primary colors
-- Secondary colors
-- Neutral/gray scale
-- Semantic colors (success, warning, error, info)
-- Accessibility compliant contrast ratios
+---
 
-### 4. **Button Components** (`/src/components/button/`)
-- **Primary Button**: Main call-to-action buttons
-- **Secondary Button**: Alternative action buttons
-- Features: Variants, sizes, loading states, icons
+## ✨ Key Features
+
+### 🤖 AI-Powered Intelligence
+- **Smart Business Recommendations** - Let our AI analyze your capital, interests, and local market to suggest ideal business opportunities
+- **Strategic Guidance** - Get personalized action plans tailored to your specific situation
+- **Expense & Income Management** - Advanced analytics to track your financial health
+
+### 📈 Business Management Tools
+- 💰 **Income Tracking** - Record and monitor all revenue streams
+- 📉 **Expense Management** - Categorize and analyze your spending patterns
+- 📊 **Financial Dashboard** - Real-time overview of your business metrics
+- 📅 **Daily Insights** - Actionable recommendations based on your data
+- 📋 **Transaction History** - Complete audit trail of all financial activities
+
+### 🎯 Business Discovery Flow
+- **Interactive Questionnaire** - Answer key questions about your situation
+- **Personalized Results** - Receive curated business ideas matching your profile
+- **Detailed Business Profiles** - Deep insights into each recommended business
+- **Actionable Strategies** - Ready-to-implement startup plans
+
+### 👤 User Management
+- Secure authentication system
+- Personalized user profiles
+- Multi-session support
+
+---
 
 ## 🛠️ Technology Stack
 
-### Core Technologies
-- **Next.js 14** - React framework with App Router
-- **TypeScript** - Type-safe JavaScript
-- **Styled Components** - CSS-in-JS styling
-- **React 18** - Latest React version
+### Frontend
+- **Next.js 14** - Modern React framework with App Router
+- **TypeScript** - Type-safe development
+- **Styled Components** - Component-scoped styling
+- **Recharts** - Data visualization and charts
+- **Tailwind CSS** - Utility-first CSS framework
 
-### Development Tools
-- **ESLint** - Code linting
-- **Prettier** - Code formatting
-- **Storybook** - Component documentation (planned)
-- **Jest** - Unit testing (planned)
+### Backend Architecture
+- **Next.js API Routes** - Serverless backend
+- **Clean Architecture** - Separation of concerns with layered architecture
+- **Context API** - State management
+- **Local Storage** - Client-side data persistence
 
-### Styling System
-- **CSS-in-JS** with Styled Components
-- **Design Tokens** in theme configuration
-- **Responsive Design** utilities
-- **Dark Mode** support (planned)
+### AI Integration
+- **Gemini AI** - Intelligent business recommendations and insights
+- **LLM-Powered Features** - Natural language processing for better user experience
 
-## 📚 Documentation Structure
+---
 
-### Component Documentation
-Each component includes:
-1. **Live Examples** - Interactive component previews
-2. **Usage Examples** - Code snippets for common use cases
-3. **API Reference** - Complete prop documentation
-4. **Best Practices** - Guidelines for optimal usage
-5. **Accessibility Notes** - ARIA attributes and keyboard support
+## 📂 Project Structure
 
-### Documentation Pages
-- `/kit/colors` - Color system documentation
-- `/kit/typography` - Typography guidelines
-- `/kit/common/styled-flex-div` - StyledFlex component docs
-- `/kit/logo` - Logo usage and branding
-- `/kit/use-theme` - Theme hook documentation
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── (main)/            # Main application routes
+│   │   ├── (auth)/        # Authentication flows
+│   │   ├── (landing-page)/ # Landing & business discovery
+│   │   ├── catat-pemasukan/ # Income tracking
+│   │   ├── catat-pengeluaran/ # Expense tracking
+│   │   └── dashboard/      # Main dashboard
+│   └── api/               # API endpoints
+├── components/            # Reusable React components
+│   ├── button/           # Button variations
+│   ├── input/            # Input components
+│   ├── modal/            # Modal dialogs
+│   ├── dashboard/        # Dashboard-specific components
+│   └── chart/            # Chart components
+├── hooks/                # Custom React hooks
+├── lib/                  # Business logic & features
+│   ├── feature/         # Feature-specific logic
+│   │   ├── businessRecommendation/
+│   │   ├── insertTransaction/
+│   │   ├── itemRecommendation/
+│   │   └── ...
+│   └── common/          # Shared utilities
+├── core/                # Core configuration
+│   ├── theme/          # Design system & theming
+│   ├── constants/      # Application constants
+│   └── assets/         # Static assets
+└── types/              # TypeScript type definitions
+```
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+
-- npm or yarn
-- Git
+- npm or yarn package manager
 
 ### Installation
+
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/Arroziqi/rintis.git
+
+# Navigate to project directory
 cd rintis
 
 # Install dependencies
 npm install
 # or
 yarn install
+```
 
+### Development
+
+```bash
 # Start development server
 npm run dev
 # or
 yarn dev
 ```
 
-### Development Commands
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Build for Production
+
 ```bash
-# Start development server
-npm run dev
-
-# Build for production
 npm run build
-
-# Start production server
-npm run start
-
-# Lint code
-npm run lint
-
-# Type checking
-npm run type-check
+npm start
 ```
 
-## 🔧 Configuration
+---
 
-### Environment Variables
-Create `.env.local` file:
-```env
-# Next.js configuration
-NEXT_PUBLIC_APP_NAME=RINTIS
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+## 👥 Development Team
 
-# Analytics (optional)
-NEXT_PUBLIC_GA_ID=UA-XXXXXXXX-X
-```
+**Tim Saus Sambel** - The creative minds behind Rintis
 
-### Theme Configuration
-The theme is configured in `/src/core/theme/styleGuide/`:
-- Color tokens
-- Typography scales
-- Spacing system
-- Breakpoints for responsive design
+| Name               | Role                              | GitHub |
+|--------------------|-----------------------------------|--------|
+| **Ma Dang Yu**     | Frontend Developer                | [@Arroziqi](https://github.com/Arroziqi) |
+| **Nam do Ngo**     | Frontend Developer & Ui/UX Designer | [@zeronyms](https://github.com/zeronyms) |
+| **Liem Swie King** | Backend Developer                 | - |
 
-## 📱 Component Development Guidelines
+---
 
-### Creating New Components
-1. **Directory Structure**: Place in `/src/components/[category]/[component-name]/`
-2. **File Structure**:
-    - `index.tsx` - Main component
-    - `types.ts` - TypeScript interfaces
-    - `styles.ts` - Styled components
-    - `README.md` - Component documentation
-    - `[ComponentName].test.tsx` - Test files
+## 📖 Core Workflows
 
-3. **Component Template**:
-```typescript
-// Use TypeScript for type safety
-// Use styled-components for styling
-// Include proper prop documentation
-// Add accessibility attributes
-// Support responsive design
-```
+### 1️⃣ Business Discovery (Mulai)
+Users answer targeted questions about their capital, interests, skills, and location. Our AI engine processes this information and recommends suitable business opportunities with detailed profiles and startup strategies.
 
-### Code Quality Standards
-- **TypeScript**: Strict mode enabled
-- **Naming**: PascalCase for components, camelCase for functions
-- **Imports**: Group and order imports properly
-- **Exports**: Use named exports for components
-- **Documentation**: JSDoc comments for public APIs
+### 2️⃣ Business Management (Kelola)
+Track all financial transactions, categorize income and expenses, and gain insights into business performance through interactive dashboards and charts.
 
-## 🧪 Testing Strategy
+### 3️⃣ Results & Recommendations (Hasil)
+View detailed business recommendations with profit potential, required capital, and step-by-step implementation guides.
 
-### Unit Tests
-- Component rendering
-- Props validation
-- Event handlers
-- State management
+### 4️⃣ Dashboard
+Central hub for financial overview, daily insights, transaction history, and key performance indicators.
 
-### Integration Tests
-- Component interactions
-- Theme provider
-- Responsive behavior
+---
 
-### Accessibility Tests
-- ARIA labels
-- Keyboard navigation
-- Screen reader compatibility
+## 🎨 Design Philosophy
 
-## 📈 Future Roadmap
+- **Mobile-First** - Optimized for mobile devices, responsive on all screens
+- **Clean UI** - Intuitive and clutter-free interface
+- **Dark Mode Support** - Eye-friendly theme options
+- **Accessibility** - WCAG compliant components
+- **Performance** - Lightning-fast load times
 
-### Phase 1 (Current)
-- ✅ Core component library
-- ✅ Design system documentation
-- ✅ TypeScript integration
-- ✅ Basic theming system
+---
 
-### Phase 2 (Next)
-- 🔄 Dark mode support
-- 🔄 Advanced theming (multi-brand)
-- 🔄 Storybook integration
-- 🔄 Component testing suite
+## 🔐 Security
 
-### Phase 3 (Planned)
-- 📅 Design token export
-- 📅 Figma plugin for design sync
-- 📅 NPM package distribution
-- 📅 CI/CD pipeline
+- Secure authentication with encrypted passwords
+- Session management
+- Protected API routes
+- Client-side data validation
+- Type-safe operations with TypeScript
 
-## 🤝 Contributing
+---
 
-### Development Workflow
-1. Fork the repository
-2. Create a feature branch
-3. Make changes with tests
-4. Update documentation
-5. Submit pull request
+## 📊 Features in Detail
 
-### Code Review Guidelines
-- All PRs require review
-- Tests must pass
-- Documentation must be updated
-- Follow existing patterns
+### Business Recommendation Engine
+- Analyzes user profile and preferences
+- Cross-references with market data
+- Generates AI-powered business suggestions
+- Provides profitability estimates
+- Includes startup checklists
+
+### Financial Management
+- Real-time balance calculation
+- Category-based expense tracking
+- Revenue stream monitoring
+- Period-based analytics
+- Exportable reports
+
+### Smart Insights
+- Daily performance summaries
+- Spending pattern analysis
+- Revenue trend identification
+- Growth recommendations
+- Alert system for anomalies
+
+---
+
+## 🌟 Unique Selling Points
+
+✅ **AI-Powered** - Intelligent recommendations using advanced AI
+✅ **All-in-One** - Discovery, planning, and management in one app
+✅ **User-Friendly** - Intuitive interface for non-tech users
+✅ **Data-Driven** - Make decisions based on real analytics
+✅ **Mobile Optimized** - Perfect for on-the-go entrepreneurs
+✅ **Free to Start** - Accessible to everyone
+
+---
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🆘 Support
+---
 
-- **Documentation**: Visit `/kit` pages in development server
-- **Issues**: Use GitHub Issues for bug reports
-- **Questions**: Check existing documentation first
+## 🙏 Acknowledgments
+
+Built with ❤️ by **Tim Saus Sambel**
 
 ---
 
-**RINTIS** - Building consistent, accessible, and beautiful user interfaces.
+<div align="center">
+
+**Start your entrepreneurial journey with Rintis today! 🚀**
+
+[Visit GitHub](https://github.com/Arroziqi/rintis) • [View Demo](https://rintis.app) • [Read Docs](https://docs.rintis.app)
+
+---
+
+*Your success story starts with a single step. Let Rintis guide you there.* 💡
+
+</div>
