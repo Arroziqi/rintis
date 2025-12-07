@@ -4,6 +4,8 @@ import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import Typography from '@/components/Typography';
 import { StyledButton } from '@/components/button/primary/PrimaryButton.styled';
 import { IBusinessDetail } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
+import { formatRupiahNumber } from '@/common/utils/rupiah';
+import { getEstimatedPaybackMonth } from '@/common/utils/roi';
 
 interface DetailModalProps extends ModalProps {
   data: IBusinessDetail;
@@ -11,32 +13,55 @@ interface DetailModalProps extends ModalProps {
 
 function DetailModal({ data, ...props }: Readonly<DetailModalProps>) {
   const content = (
-    <>
+    <StyledFlex direction={'column'} gap={'10px'} marginTop={'20px'}>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}>Omzet Harian</Typography>
-        <Typography variant={'pixie'}>{data.estimasi_omset_harian}</Typography>
+        <Typography variant={'pixie'}>
+          Rp {formatRupiahNumber(data.estimasi_omset_harian)}
+        </Typography>
       </StyledFlex>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}>HPP/Modal</Typography>
-        <Typography variant={'pixie'}>{data.estimasi_hpp}</Typography>
+        <Typography variant={'pixie'}>
+          Rp {formatRupiahNumber(data.estimasi_hpp)}
+        </Typography>
       </StyledFlex>
       <StyledFlex justify={'space-between'}>
-        <Typography variant={'pixie'}>Profit</Typography>
-        <Typography variant={'pixie'}>{data.profit_harian}</Typography>
+        <Typography variant={'pixie'}> Harian</Typography>
+        <Typography variant={'pixie'}>
+          Rp {formatRupiahNumber(data.profit_harian)}
+        </Typography>
+      </StyledFlex>
+      <StyledFlex justify={'space-between'}>
+        <Typography variant={'pixie'}> Simulasi ROI</Typography>
+        <Typography variant={'pixie'}>{data.simulasi_roi}</Typography>
       </StyledFlex>
 
-      {data.pro && <Typography variant={'pixie'}>✅ {data.pro}</Typography>}
-      {data.kontra && (
-        <Typography variant={'pixie'}>⚠️ {data.kontra}</Typography>
-      )}
+      <StyledFlex direction={'column'} gap={'10px'} marginTop={'15px'}>
+        {data.simulasi_roi && (
+          <Typography component={'p'} variant={'pixie'}>
+            💹 {getEstimatedPaybackMonth(data.simulasi_roi)}
+          </Typography>
+        )}
+        {data.pro && (
+          <Typography component={'p'} variant={'pixie'}>
+            ✅ {data.pro}
+          </Typography>
+        )}
+        {data.kontra && (
+          <Typography component={'p'} variant={'pixie'}>
+            ⚠️ {data.kontra}
+          </Typography>
+        )}
+      </StyledFlex>
 
       <StyledButton
-        className={'mt-5 w-fit self-center'}
+        className={'mt-3 w-fit self-center'}
         style={{ border: '1px solid #C4C4C4' }}
       >
         Pilih Bisnis
       </StyledButton>
-    </>
+    </StyledFlex>
   );
 
   return (
