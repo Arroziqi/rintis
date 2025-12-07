@@ -14,4 +14,8 @@ export const API_ENDPOINTS = {
   GETCHARTDATA: '/getDataBar',
   INSERT_TRANSAKSI: '/insertTransaksi',
   GET_ITEM_RECOMMENDATIONS: '/getRekomendasiItem',
+  GETITEMLIST: '/getItemList',
+  INTEGRATIONEXPENSES: '/integrationExpense',
+  DELETEITEMLIST: '/deleteItem',
+  UPSERTITEMLIST: '/upsertDataItem',
 } as const;

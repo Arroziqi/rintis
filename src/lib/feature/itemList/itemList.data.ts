@@ -2,18 +2,19 @@
 
 import { getAuthToken } from '@/lib/auth';
 import { API_BASE_URL, API_ENDPOINTS } from '@/core/config/api.config';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import RecomendedItemTypes from '@/types/ItemListTypes';
 
-export async function fetchBalance(): Promise<number | null> {
+export async function fetchItemList() {
+  const token = await getAuthToken();
+
+  if (!token) {
+    return null;
+  }
+
   try {
-    const token = await getAuthToken();
-
-    if (!token) {
-      return null;
-    }
-
-    const url = `${API_BASE_URL}${API_ENDPOINTS.BALANCE}`;
+    const url = `${API_BASE_URL}${API_ENDPOINTS.GETITEMLIST}`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -24,7 +25,6 @@ export async function fetchBalance(): Promise<number | null> {
       cache: 'no-store',
     });
 
-    // If token is invalid/expired (401), clear cookies and redirect to login
     if (response.status === 401) {
       const cookieStore = await cookies();
       cookieStore.delete('auth_token');
@@ -35,7 +35,7 @@ export async function fetchBalance(): Promise<number | null> {
     if (!response.ok) {
       const errorText = await response.text();
       console.error(
-        'Failed to fetch user balance:',
+        'Failed to fetch items recommendation:',
         response.status,
         errorText
       );
@@ -43,9 +43,9 @@ export async function fetchBalance(): Promise<number | null> {
     }
 
     const data = await response.json();
-    return data as number;
+    return data as RecomendedItemTypes[];
   } catch (error) {
-    console.error('Error fetching balance:', error);
+    console.error('Error fetching items recommendation:', error);
     return null;
   }
 }
