@@ -7,6 +7,7 @@ export const API_ENDPOINTS = {
   },
   USERINFO: '/user/info',
   BALANCE: '/getBalance',
+  LABA_RUGI: '/getLabaRugi',
   TRANSAKSI: '/insertTransaksi',
   GETALLTRANSAKSI: '/getAll',
   DAILYINSIGHT: '/getInsight',

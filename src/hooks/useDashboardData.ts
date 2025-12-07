@@ -7,6 +7,7 @@ import ItemList from '@/types/ItemListTypes';
 import { DailyInsight } from '@/types/DailyInsightTypes';
 import { getUserInfoAction } from '@/lib/feature/user/user.action';
 import { getBalanceAction } from '@/lib/feature/balance/balance.action';
+import { getLabaRugiAction } from '@/lib/feature/labaRugi/labaRugi.action';
 import { fetchChartData } from '@/lib/feature/chartData/chart.data';
 import { fetchItemList } from '@/lib/feature/itemList/itemList.data';
 import { fetchDailyInsight } from '@/lib/feature/insight/insight.data';
@@ -14,6 +15,7 @@ import { fetchDailyInsight } from '@/lib/feature/insight/insight.data';
 interface UseDashboardDataReturn {
   userInfo: UserInfo | null;
   userBalance: number;
+  labaRugi: number;
   chartData: ChartData[] | null;
   itemList: ItemList[] | null;
   dailyInsight: DailyInsight[] | null;
@@ -25,6 +27,7 @@ interface UseDashboardDataReturn {
 export function useDashboardData(): UseDashboardDataReturn {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [userBalance, setUserBalance] = useState<number>(0);
+  const [labaRugi, setLabaRugi] = useState<number>(0);
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
   const [itemList, setItemList] = useState<ItemList[] | null>(null);
   const [dailyInsight, setDailyInsight] = useState<DailyInsight[] | null>(null);
@@ -63,6 +66,15 @@ export function useDashboardData(): UseDashboardDataReturn {
       }
     }
 
+    async function loadLabaRugi() {
+      try {
+        const labaRugiData = await getLabaRugiAction();
+        setLabaRugi(labaRugiData || 0);
+      } catch (error) {
+        console.error('Failed to load laba rugi:', error);
+      }
+    }
+
     async function loadChartData() {
       try {
         const data = await fetchChartData();
@@ -86,6 +98,7 @@ export function useDashboardData(): UseDashboardDataReturn {
         await Promise.all([
           loadUserInfo(),
           loadUserBalance(),
+          loadLabaRugi(),
           loadChartData(),
           loadItemList(),
         ]);
@@ -109,6 +122,7 @@ export function useDashboardData(): UseDashboardDataReturn {
   return {
     userInfo,
     userBalance,
+    labaRugi,
     chartData,
     itemList,
     dailyInsight,
