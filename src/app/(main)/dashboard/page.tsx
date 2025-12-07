@@ -18,6 +18,7 @@ export default function DashboardPage() {
   const {
     userInfo,
     userBalance,
+    labaRugi,
     chartData,
     itemList,
     dailyInsight,
@@ -91,7 +92,7 @@ export default function DashboardPage() {
         name={displayName}
         username={displayUsername}
       />
-      <BalanceCard balance={userBalance} />
+      <BalanceCard balance={userBalance} labaRugi={labaRugi} />
       {managedItemList && managedItemList.length > 0 && (
         <ItemListSection
           itemList={managedItemList}
