@@ -148,10 +148,10 @@ npm start
 
 **Tim Saus Sambel** - The creative minds behind Rintis
 
-| Name | Role                              | GitHub |
-|------|-----------------------------------|--------|
-| **Arroziqi** | Frontend Developer                | [@Arroziqi](https://github.com/Arroziqi) |
-| **Zeronyms** | Frontend Developer & Ui/UX Designer | [@zeronyms](https://github.com/zeronyms) |
+| Name               | Role                              | GitHub |
+|--------------------|-----------------------------------|--------|
+| **Ma Dang Yu**     | Frontend Developer                | [@Arroziqi](https://github.com/Arroziqi) |
+| **Nam do Ngo**     | Frontend Developer & Ui/UX Designer | [@zeronyms](https://github.com/zeronyms) |
 | **Liem Swie King** | Backend Developer                 | - |
 
 ---
