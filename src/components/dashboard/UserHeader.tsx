@@ -11,7 +11,7 @@ import { useModal } from '@/components/modal/hooks/useModal';
 interface UserHeaderProps {
   name: string;
   username: string;
-  userInfo: UserInfo;
+  userInfo?: UserInfo;
 }
 
 export function UserHeader({

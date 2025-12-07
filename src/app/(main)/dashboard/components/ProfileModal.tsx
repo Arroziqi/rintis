@@ -7,43 +7,50 @@ import { UserInfo } from '@/types/UserInfoTypes';
 import { copyText } from '@/common/utils/copyText';
 import { toast } from 'sonner';
 import { MdOutlineContentCopy } from 'react-icons/md';
+import { logoutAction } from '@/lib/feature/logout/logout.action';
 
 interface ProfileModalProps extends ModalProps {
-  data: UserInfo;
+  data?: UserInfo;
 }
 
 function ProfileModal({ data, ...props }: Readonly<ProfileModalProps>) {
   const handleSignOutButton = async () => {
-    alert('function is not implemented');
+    await logoutAction();
+  };
+
+  const handleCopyText = async () => {
+    if (data) {
+      const result = await copyText(data?.token_saweria);
+      if (result.success) toast.success('Copied!');
+      else toast.error('Gagal menyalin');
+    } else {
+      toast.error('Data user tidak ada, pastikan anda sudah login');
+    }
   };
 
   const content = (
     <StyledFlex direction={'column'} gap={'10px'} marginTop={'20px'}>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}>Name</Typography>
-        <Typography variant={'pixie'}>data.name</Typography>
+        <Typography variant={'pixie'}>{data?.name}</Typography>
       </StyledFlex>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}>Username</Typography>
-        <Typography variant={'pixie'}>data.username</Typography>
+        <Typography variant={'pixie'}>{data?.username}</Typography>
       </StyledFlex>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}>Email</Typography>
-        <Typography variant={'pixie'}>data.email</Typography>
+        <Typography variant={'pixie'}>{data?.email}</Typography>
       </StyledFlex>
       <StyledFlex
         justify="space-between"
-        onClick={async () => {
-          const result = await copyText(data.token_saweria);
-          if (result.success) toast.success('Copied!');
-          else toast.error('Gagal menyalin');
-        }}
+        onClick={handleCopyText}
         className="cursor-pointer"
       >
         <Typography variant="pixie">Token Saweria</Typography>
         <StyledFlex gap={'5px'} align={'center'}>
           <MdOutlineContentCopy />
-          <Typography variant="pixie">{data.token_saweria}</Typography>
+          <Typography variant="pixie">{data?.token_saweria}</Typography>
         </StyledFlex>
       </StyledFlex>
 
