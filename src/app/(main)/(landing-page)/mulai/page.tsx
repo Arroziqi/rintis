@@ -8,9 +8,7 @@ import MulaiContent from './components/MulaiContent';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import { useBusinessRecommendation } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
 import { MulaiData } from '@/app/(main)/(landing-page)/mulai/data/Mulai.data';
-import { IGetBusinessRecommendationPayload } from '@/lib/feature/businessRecommendation/presentation/schema/GetBusinessRecommendation.schema';
-import toast from 'react-hot-toast';
-import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 export default function MulaiPage() {
   const router = useRouter();
@@ -19,28 +17,21 @@ export default function MulaiPage() {
     totalSteps: MulaiData.length,
   });
 
-  useEffect(() => {
-    if (loading) {
-      toast.loading('Sedang memproses rekomendasi...');
-    } else {
-      toast.dismiss();
-    }
-
-    return () => {
-      toast.dismiss();
-    };
-  }, [loading]);
-
   const handleLastStep = async () => {
-    const payload: IGetBusinessRecommendationPayload = form.getValues();
+    const id = toast.loading('Sedang memproses rekomendasi...');
 
+    const payload = form.getValues();
     const success = await onSubmit(payload);
 
     if (!success) {
-      toast.error('Gagal memuat rekomendasi bisnis');
+      toast.error(
+        'Gagal memuat rekomendasi bisnis, pastikan semua input terisi dan silakan coba lagi',
+        { id }
+      );
       return;
     }
 
+    toast.success('Berhasil memuat rekomendasi bisnis!', { id });
     router.push('/hasil');
   };
 

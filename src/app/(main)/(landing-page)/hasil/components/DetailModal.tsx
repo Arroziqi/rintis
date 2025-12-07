@@ -5,9 +5,8 @@ import Typography from '@/components/Typography';
 import { StyledButton } from '@/components/button/primary/PrimaryButton.styled';
 import { IBusinessDetail } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
 import { formatRupiahNumber } from '@/common/utils/rupiah';
-import { getEstimatedPaybackMonth } from '@/common/utils/roi';
-import { useBusinessRecommendation } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
 import { toast } from 'sonner';
+import { useBusinessRecommendation } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
 
 interface DetailModalProps extends ModalProps {
   data: IBusinessDetail;
@@ -56,25 +55,12 @@ function DetailModal({ data, ...props }: Readonly<DetailModalProps>) {
       </StyledFlex>
       <StyledFlex justify={'space-between'}>
         <Typography variant={'pixie'}> Simulasi ROI</Typography>
-        <Typography variant={'pixie'}>{data.simulasi_roi}</Typography>
+        <Typography className={'max-w-[75%] text-right'} variant={'pixie'}>
+          {data.simulasi_roi}
+        </Typography>
       </StyledFlex>
 
       <StyledFlex direction={'column'} gap={'10px'} marginTop={'15px'}>
-        {data.simulasi_roi &&
-          (() => {
-            try {
-              const val = getEstimatedPaybackMonth(data.simulasi_roi);
-              if (!val) return null;
-              return (
-                <Typography component="p" variant="pixie">
-                  💹 {val}
-                </Typography>
-              );
-            } catch {
-              return null;
-            }
-          })()}
-
         {data.pro && (
           <Typography component={'p'} variant={'pixie'}>
             ✅ {data.pro}

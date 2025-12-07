@@ -3,7 +3,7 @@ import { Poppins } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/common/provider/ThemeProvider';
 import '@/common/styles/theme-transition.css';
-import { Toaster } from 'react-hot-toast';
+import React from 'react';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -28,10 +28,7 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased`}
         style={{ backgroundColor: `var(--color-background-default)` }}
       >
-        <ThemeProvider>
-          <Toaster position="top-center" />
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
