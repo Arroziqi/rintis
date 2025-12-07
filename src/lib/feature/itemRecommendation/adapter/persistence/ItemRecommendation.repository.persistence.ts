@@ -12,7 +12,6 @@ export class ItemRecommendationRepositoryPersistence implements BusinessRecommen
     request: IGetBusinessRecommendationRequest
   ): Promise<IGetBusinessRecommendationResponse | null> {
     try {
-      console.log('request', request);
       return await api.get(API_ENDPOINTS.GET_BUSINESS_RECOMMENDATIONS, {
         params: request,
       });

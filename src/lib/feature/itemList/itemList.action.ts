@@ -15,8 +15,6 @@ export async function submitCheckedItemsAction(itemIds: number[]) {
       itemId,
     }));
 
-    console.log('Submit payload:', JSON.stringify(body));
-
     const response = await fetch(
       `${API_BASE_URL}${API_ENDPOINTS.INTEGRATIONEXPENSES}`,
       {
@@ -121,8 +119,6 @@ export async function addNewItemAction(
       isAdded: '',
       itemName,
     };
-
-    console.log('Add/Update item payload:', JSON.stringify(payload));
 
     const response = await fetch(
       `${API_BASE_URL}${API_ENDPOINTS.UPSERTITEMLIST}`,

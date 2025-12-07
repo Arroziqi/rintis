@@ -58,7 +58,6 @@ export async function loginAction(
 
     // Store token in cookies if provided
     if (data.token) {
-      console.log('Storing token in cookies');
       const cookieStore = await cookies();
       cookieStore.set('auth_token', data.token, {
         httpOnly: true,
@@ -78,8 +77,6 @@ export async function loginAction(
         });
       }
     }
-
-    console.log('Login successful, redirecting to dashboard');
   } catch (error) {
     console.error('Login error:', error);
     return {
