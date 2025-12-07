@@ -78,7 +78,6 @@ export async function submitTransaksiAction(
     } catch {
       // If we can't parse JSON but got a 200, it's still success
       if (response.ok) {
-        console.log('API returned 200 but response body is not JSON');
         return {
           message: 'Transaksi berhasil disimpan!',
           success: true,
@@ -88,8 +87,6 @@ export async function submitTransaksiAction(
         message: `API Error: ${response.status} ${response.statusText}`,
       };
     }
-
-    console.log('API response data:', responseData);
 
     if (!response.ok) {
       console.error('API error response:', responseData);

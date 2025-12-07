@@ -1,27 +1,24 @@
 import { UseCase } from '@/lib/common/types/usecase';
-import {
-  GetBusinessRecommendationSchema,
-  IGetBusinessRecommendationPayload,
-} from '@/lib/feature/businessRecommendation/presentation/schema/GetBusinessRecommendation.schema';
-import { IGetBusinessRecommendationResponse } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
-import { BusinessRecommendationRepositoryPort } from '@/lib/feature/businessRecommendation/port/BusinessRecommendation.repository.port';
 import { ValidationPipe } from '@/lib/common/pipes/Validation.pipe';
-import { mapBusinessRecommendationPayloadToRequest } from '@/lib/feature/businessRecommendation/presentation/mapper/BusinessRecommendation.mapper';
+import {
+  GetItemRecommendationRequestSchema,
+  IGetItemRecommendationPayload,
+} from '@/lib/feature/itemRecommendation/presentation/schema/GetItemRecommendation.schema';
+import { IGetItemRecommendationResponse } from '@/lib/feature/itemRecommendation/presentation/dto/GetItemRecommendation.dto';
+import { ItemRecommendationRepositoryPort } from '@/lib/feature/itemRecommendation/port/ItemRecommendation.repository.port';
 
 export class GetItemRecommendationUsecase implements UseCase<
-  IGetBusinessRecommendationPayload,
-  IGetBusinessRecommendationResponse | null
+  IGetItemRecommendationPayload,
+  IGetItemRecommendationResponse | null
 > {
-  constructor(private readonly service: BusinessRecommendationRepositoryPort) {}
+  constructor(private readonly service: ItemRecommendationRepositoryPort) {}
 
   async execute(
-    input: IGetBusinessRecommendationPayload
-  ): Promise<IGetBusinessRecommendationResponse | null> {
-    const validatedPayload: IGetBusinessRecommendationPayload =
-      ValidationPipe.validate(GetBusinessRecommendationSchema, input);
+    input: IGetItemRecommendationPayload
+  ): Promise<IGetItemRecommendationResponse | null> {
+    const validatedPayload: IGetItemRecommendationPayload =
+      ValidationPipe.validate(GetItemRecommendationRequestSchema, input);
 
-    const request = mapBusinessRecommendationPayloadToRequest(validatedPayload);
-
-    return await this.service.getAll(request);
+    return await this.service.getAll(validatedPayload);
   }
 }

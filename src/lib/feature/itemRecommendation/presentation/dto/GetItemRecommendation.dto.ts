@@ -1,30 +1,30 @@
 export interface IGetItemRecommendationRequest {
-  business_model: string;
-  budget: string;
-  hour: string;
-  location: string;
+  businessType: string;
+  budget: string; // contoh: "20.000.000"
 }
 
-export interface IGetItemRecommendationResponse {
+export interface IItemRecommendationRaw {
+  'item name': string;
+  description: string;
+  'estimated prices': number;
+  'source of price data': string;
+}
+
+export interface IGetItemRecommendationResponseRaw {
   data: {
-    rekomendasi: IItemRecommendation[];
+    items: IItemRecommendationRaw[];
   };
   response_code: number;
 }
 
 export interface IItemRecommendation {
-  nama_bisnis: string;
+  itemName: string;
   description: string;
-  explanation: string;
-  estimasi_modal: number;
-  info_lain: IItemDetail;
+  estimatedPrices: number;
+  sourceOfPriceData: string;
 }
 
-export interface IItemDetail {
-  pro: string;
-  kontra: string;
-  simulasi_roi: string;
-  estimasi_omset_harian: number;
-  estimasi_hpp: number;
-  profit_harian: number;
+export interface IGetItemRecommendationResponse {
+  items: IItemRecommendation[];
+  responseCode: number;
 }

@@ -26,7 +26,6 @@ export async function fetchChartData() {
 
     // If token is invalid/expired (401), clear cookies and redirect to login
     if (response.status === 401) {
-      console.log('Token expired or invalid, redirecting to login');
       const cookieStore = await cookies();
       cookieStore.delete('auth_token');
       cookieStore.delete('user_id');

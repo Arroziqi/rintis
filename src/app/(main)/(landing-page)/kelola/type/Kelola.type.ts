@@ -1,8 +1,13 @@
-import React from 'react';
-
 export interface KelolaStepType {
   id: number;
   title: string;
   description?: string;
-  content?: React.ReactNode;
+  type?: 'input' | 'none';
+  field?: 'cash' | 'omzet';
+  placeholder?: string;
+}
+
+export interface IKelolaForm {
+  cash: string;
+  omzet: string;
 }

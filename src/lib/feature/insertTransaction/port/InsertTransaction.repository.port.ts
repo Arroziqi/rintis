@@ -1,10 +1,7 @@
-import {
-  IGetBusinessRecommendationRequest,
-  IGetBusinessRecommendationResponse,
-} from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
+import { InsertTransactionRequest } from '@/lib/feature/insertTransaction/presentation/dto/InsertTransaction.dto';
 
 export interface InsertTransactionRepositoryPort {
-  getAll(
-    request: IGetBusinessRecommendationRequest
-  ): Promise<IGetBusinessRecommendationResponse | null>;
+  insertTransaction(
+    request: InsertTransactionRequest[]
+  ): Promise<string | null>;
 }

@@ -6,12 +6,34 @@ import { StyledButton } from '@/components/button/primary/PrimaryButton.styled';
 import { IBusinessDetail } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
 import { formatRupiahNumber } from '@/common/utils/rupiah';
 import { getEstimatedPaybackMonth } from '@/common/utils/roi';
+import { useBusinessRecommendation } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
+import { toast } from 'sonner';
 
 interface DetailModalProps extends ModalProps {
   data: IBusinessDetail;
 }
 
 function DetailModal({ data, ...props }: Readonly<DetailModalProps>) {
+  const {
+    onChooseBusiness,
+    form,
+    data: businessRecommendation,
+  } = useBusinessRecommendation();
+
+  const businessRecommendationChoosed =
+    businessRecommendation?.data.rekomendasi.find(
+      (item) => item.info_lain.pro === data.pro
+    );
+
+  const handleChooseBusiness = async () => {
+    if (!businessRecommendationChoosed) {
+      toast.error('⚠️ Generate rekomendasi bisnis terlebih dahulu yaa!');
+      return;
+    }
+
+    await onChooseBusiness(form.getValues(), businessRecommendationChoosed);
+  };
+
   const content = (
     <StyledFlex direction={'column'} gap={'10px'} marginTop={'20px'}>
       <StyledFlex justify={'space-between'}>
@@ -38,11 +60,21 @@ function DetailModal({ data, ...props }: Readonly<DetailModalProps>) {
       </StyledFlex>
 
       <StyledFlex direction={'column'} gap={'10px'} marginTop={'15px'}>
-        {data.simulasi_roi && (
-          <Typography component={'p'} variant={'pixie'}>
-            💹 {getEstimatedPaybackMonth(data.simulasi_roi)}
-          </Typography>
-        )}
+        {data.simulasi_roi &&
+          (() => {
+            try {
+              const val = getEstimatedPaybackMonth(data.simulasi_roi);
+              if (!val) return null;
+              return (
+                <Typography component="p" variant="pixie">
+                  💹 {val}
+                </Typography>
+              );
+            } catch {
+              return null;
+            }
+          })()}
+
         {data.pro && (
           <Typography component={'p'} variant={'pixie'}>
             ✅ {data.pro}
@@ -58,6 +90,7 @@ function DetailModal({ data, ...props }: Readonly<DetailModalProps>) {
       <StyledButton
         className={'mt-3 w-fit self-center'}
         style={{ border: '1px solid #C4C4C4' }}
+        onClick={handleChooseBusiness}
       >
         Pilih Bisnis
       </StyledButton>
