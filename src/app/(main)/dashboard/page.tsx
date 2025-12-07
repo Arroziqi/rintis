@@ -12,7 +12,7 @@ import { ItemListSection } from '@/components/dashboard/ItemListSection';
 import { ActionCards } from '@/components/dashboard/ActionCards';
 import { DailyInsightSection } from '@/components/dashboard/DailyInsightSection';
 import { useEffect } from 'react';
-import { useFlowExecutor } from '@/app/(main)/dashboard/hooks/useFlowExecutor';
+import { useFlowExecutor } from '@/hooks/useFlowExecutor';
 
 export default function DashboardPage() {
   const {
