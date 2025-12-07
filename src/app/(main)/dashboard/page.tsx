@@ -115,7 +115,11 @@ export default function DashboardPage() {
 
   return (
     <>
-      <UserHeader name={displayName} username={displayUsername} />
+      <UserHeader
+        userInfo={userInfo!}
+        name={displayName}
+        username={displayUsername}
+      />
       <BalanceCard balance={userBalance} />
       {managedItemList && managedItemList.length > 0 && (
         <ItemListSection
