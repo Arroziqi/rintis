@@ -8,8 +8,8 @@ import { KelolaData } from '@/app/(main)/(landing-page)/kelola/data/Kelola.data'
 import KelolaContent from '@/app/(main)/(landing-page)/kelola/components/KelolaContent';
 import { useBusinessRecommendation } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 import { IKelolaForm } from '@/app/(main)/(landing-page)/kelola/type/Kelola.type';
+import { toast } from 'sonner';
 
 export default function KelolaPage() {
   const { currentStep, next, goToStep } = useStepper({
