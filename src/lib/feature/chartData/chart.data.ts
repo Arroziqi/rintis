@@ -1,21 +1,20 @@
 'use server';
 
-import { getAuthToken } from '@/lib/auth';
 import { API_BASE_URL, API_ENDPOINTS } from '@/core/config/api.config';
-import { UserInfo } from '@/types/UserInfoTypes';
+import { getAuthToken } from '@/lib/auth';
+import ChartData from '@/types/ChartTypes';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export async function fetchUserInfo(): Promise<UserInfo | null> {
-  const token = await getAuthToken();
-
-  if (!token) {
-    return null;
-  }
-
+export async function fetchChartData() {
   try {
-    const url = `${API_BASE_URL}${API_ENDPOINTS.USERINFO}`;
+    const token = await getAuthToken();
 
+    if (!token) {
+      return null;
+    }
+
+    const url = `${API_BASE_URL}${API_ENDPOINTS.GETCHARTDATA}`;
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -36,14 +35,14 @@ export async function fetchUserInfo(): Promise<UserInfo | null> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Failed to fetch user info:', response.status, errorText);
+      console.error('Failed to fetch chart data:', response.status, errorText);
       return null;
     }
 
     const data = await response.json();
-    return data as UserInfo;
+    return data as ChartData[];
   } catch (error) {
-    console.error('Error fetching user info:', error);
+    console.error('Error fetching chart data:', error);
     return null;
   }
 }

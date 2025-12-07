@@ -7,16 +7,15 @@ import { api } from '@/lib/common/api/axios.instance';
 import { API_ENDPOINTS } from '@/core/config/api.config';
 import { parseAxiosError } from '@/lib/common/error/parseAxiosError';
 
-export class BusinessRecommendationRepositoryPersistence implements BusinessRecommendationRepositoryPort {
+export class ItemRecommendationRepositoryPersistence implements BusinessRecommendationRepositoryPort {
   async getAll(
     request: IGetBusinessRecommendationRequest
   ): Promise<IGetBusinessRecommendationResponse | null> {
     try {
-      const response = await api.post(
-        API_ENDPOINTS.GET_BUSINESS_RECOMMENDATIONS,
-        request
-      );
-      return response.data;
+      console.log('request', request);
+      return await api.get(API_ENDPOINTS.GET_BUSINESS_RECOMMENDATIONS, {
+        params: request,
+      });
     } catch (err) {
       throw parseAxiosError(
         err,

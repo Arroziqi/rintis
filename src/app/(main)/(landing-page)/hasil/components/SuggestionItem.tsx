@@ -7,6 +7,7 @@ import { StyledButton } from '@/components/button/primary/PrimaryButton.styled';
 import { useModal } from '@/components/modal/hooks/useModal';
 import DetailModal from '@/app/(main)/(landing-page)/hasil/components/DetailModal';
 import { IBusinessRecommendation } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
+import { formatRupiahNumber } from '@/common/utils/rupiah';
 
 interface SuggestionItemProps {
   data: IBusinessRecommendation;
@@ -18,13 +19,6 @@ function SuggestionItem({ data }: Readonly<SuggestionItemProps>) {
   return (
     <>
       <StyledFlex direction={'column'} gap={'10px'}>
-        <Typography
-          className={'self-start'}
-          variant={'bodySmall'}
-          weight={'regular'}
-        >
-          {data.explanation}
-        </Typography>
         <Card
           type={'fill'}
           color={lightPalette.background.subtle}
@@ -37,9 +31,8 @@ function SuggestionItem({ data }: Readonly<SuggestionItemProps>) {
             {data.description}
           </Typography>
           <Typography component={'p'} variant={'caption'} weight={'regular'}>
-            Modal awal Rp ${data.estimasi_modal}
+            Modal awal Rp {formatRupiahNumber(data.estimasi_modal)}
           </Typography>
-          {/*{data.note && <StyledNote>{data.note}</StyledNote>}*/}
 
           <StyledButton
             onClick={openModal}
