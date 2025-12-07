@@ -110,7 +110,7 @@ export function BusinessRecommendationProvider({
 
       if (!isLoggedIn) {
         toast.error(
-          '⚠️ Kamu harus login dulu untuk melanjutkan. Tapi tenang, data bisnismu akan tetap kesimpan kok 🤗'
+          'Kamu harus login dulu untuk melanjutkan. Tapi tenang, data bisnismu akan tetap kesimpan kok 🤗'
         );
 
         localStorageFlowUtils.setFlow({

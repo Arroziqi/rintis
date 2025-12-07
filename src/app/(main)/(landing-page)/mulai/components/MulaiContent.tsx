@@ -8,16 +8,7 @@ import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import { IoIosSearch } from 'react-icons/io';
 import { FaArrowUpLong } from 'react-icons/fa6';
 import { lightPalette } from '@/core/theme/styleGuide/color';
-import { IGetBusinessRecommendationPayload } from '@/lib/feature/businessRecommendation/presentation/schema/GetBusinessRecommendation.schema';
-
-export interface MulaiStepType {
-  id: number;
-  title: string;
-  description: string;
-  type: 'input' | 'tags' | 'select';
-  field: keyof IGetBusinessRecommendationPayload;
-  placeholder?: string;
-}
+import { MulaiStepType } from '@/app/(main)/(landing-page)/mulai/type/Mulai.type';
 
 export interface MulaiContentProps extends MulaiStepType {
   onNext: () => void;
@@ -41,6 +32,7 @@ function MulaiContent({
           <StyledOutlineInput
             placeholder={props.placeholder}
             {...register(props.field)}
+            type={props.inputType}
           />
         );
 

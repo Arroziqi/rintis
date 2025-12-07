@@ -8,7 +8,8 @@ export const KelolaData: KelolaStepType[] = [
       'Supaya kami bisa bantu pantau keuangan, sekarang uang tunai/kas yang kamu pegang untuk usaha ada berapa?',
     type: 'input',
     field: 'cash',
-    placeholder: 'Input uang kas mu disini',
+    placeholder: 'Harus angka yaa...',
+    inputType: 'number',
   },
   {
     id: 2,

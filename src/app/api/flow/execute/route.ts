@@ -16,9 +16,31 @@ export async function POST(req: Request) {
   const { insertTransactionPayload, getItemRecommendationPayload } =
     await req.json();
 
+  console.log('Retrieved transaction payload', insertTransactionPayload);
+
   try {
-    // Hit API
-    await fetch(`${API_BASE_URL}/insertTransaksi`, {
+    // Get recommendation first
+    const recommendationRes = await fetch(
+      `${API_BASE_URL}/getRekomendasiItem`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(getItemRecommendationPayload),
+      }
+    );
+
+    if (!recommendationRes.ok) {
+      return Response.json(
+        { success: false, message: 'Failed to get item recommendation' },
+        { status: recommendationRes.status }
+      );
+    }
+
+    // Then insert transaction only if recommendation succeeded
+    const transactionRes = await fetch(`${API_BASE_URL}/insertTransaksi`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,14 +49,12 @@ export async function POST(req: Request) {
       body: JSON.stringify([insertTransactionPayload]),
     });
 
-    await fetch(`${API_BASE_URL}/getRekomendasiItem`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(getItemRecommendationPayload),
-    });
+    if (!transactionRes.ok) {
+      return Response.json(
+        { success: false, message: 'Failed to insert transaction' },
+        { status: transactionRes.status }
+      );
+    }
 
     return Response.json({ success: true });
   } catch (err) {
