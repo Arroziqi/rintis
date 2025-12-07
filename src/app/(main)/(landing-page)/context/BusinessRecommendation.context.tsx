@@ -26,6 +26,8 @@ import { isAuthenticated } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { localStorageFlowUtils } from '@/common/utils/localStorageFlow';
+import { localStorageKelolaFlowUtils } from '@/common/utils/localStorageKelolaFlowUtils';
+import { IKelolaForm } from '@/app/(main)/(landing-page)/kelola/type/Kelola.type';
 
 const BusinessRecommendationContext = createContext<
   BusinessRecommendationContextType | undefined
@@ -51,6 +53,13 @@ export function BusinessRecommendationProvider({
       budget: '',
       hour: '',
       location: '',
+    },
+  });
+
+  const kelolaForm = useForm<IKelolaForm>({
+    defaultValues: {
+      cash: '',
+      omzet: '',
     },
   });
 
@@ -136,6 +145,45 @@ export function BusinessRecommendationProvider({
     [getItemRecommendationUsecase, getInsertTransactionUsecase]
   );
 
+  const onKelolaFinish = useCallback(async (cash: string, omzet: string) => {
+    setLoading(true);
+    setError(null);
+
+    const insertTransactionPayload: InsertTransactionPayload = {
+      amount: Number(cash),
+      desc: 'Pendapatan harian',
+      date: formatDateToYMD(new Date()),
+      type: 4,
+    };
+
+    const isLoggedIn = await isAuthenticated();
+
+    if (!isLoggedIn) {
+      toast.error(
+        '⚠️ Kamu harus login dulu untuk melanjutkan. Tenang, datamu tetap kesimpan 🤗'
+      );
+
+      localStorageKelolaFlowUtils.setFlow({
+        insertTransactionPayload,
+      });
+
+      setTimeout(() => router.push('/login'), 800);
+
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await getInsertTransactionUsecase.execute([insertTransactionPayload]);
+      router.push('/dashboard');
+    } catch (err: unknown) {
+      const parsedError = parseAxiosError(err, 'Gagal menyimpan data kelola');
+      setError(parsedError.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const value = useMemo(
     () => ({
       form,
@@ -144,8 +192,19 @@ export function BusinessRecommendationProvider({
       error,
       onSubmit,
       onChooseBusiness,
+      onKelolaFinish,
+      kelolaForm,
     }),
-    [form, data, loading, error, onSubmit, onChooseBusiness]
+    [
+      form,
+      data,
+      loading,
+      error,
+      onSubmit,
+      onChooseBusiness,
+      onKelolaFinish,
+      kelolaForm,
+    ]
   );
 
   return (

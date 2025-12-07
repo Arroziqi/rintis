@@ -12,8 +12,7 @@ import { ItemListSection } from '@/components/dashboard/ItemListSection';
 import { ActionCards } from '@/components/dashboard/ActionCards';
 import { DailyInsightSection } from '@/components/dashboard/DailyInsightSection';
 import { useEffect } from 'react';
-import { localStorageFlowUtils } from '@/common/utils/localStorageFlow';
-import toast from 'react-hot-toast';
+import { useFlowExecutor } from '@/app/(main)/dashboard/hooks/useFlowExecutor';
 
 export default function DashboardPage() {
   const {
@@ -59,35 +58,7 @@ export default function DashboardPage() {
     setManagedItemList(itemList);
   }, [itemList, setManagedItemList]);
 
-  // to check whether the user has selected the business before logging in
-  useEffect(() => {
-    if (window.__FLOW_EXECUTED__) return;
-    window.__FLOW_EXECUTED__ = true;
-
-    const flow = localStorageFlowUtils.getFlow();
-    if (!flow) return;
-
-    const toastId = toast.loading('Memproses rekomendasi bisnismu...');
-
-    fetch('/api/flow/execute', {
-      method: 'POST',
-      body: JSON.stringify(flow),
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(async (res) => {
-        if (!res.ok) throw new Error();
-
-        toast.success('Rekomendasi berhasil diproses!', { id: toastId });
-        localStorageFlowUtils.clearFlow();
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 600);
-      })
-      .catch(() => {
-        toast.error('Gagal memproses data. Coba lagi ya 🙏', { id: toastId });
-      });
-  }, []);
+  useFlowExecutor();
 
   const displayName = userInfo?.name || 'User';
   const displayUsername = userInfo?.username || 'username';

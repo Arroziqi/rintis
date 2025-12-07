@@ -6,15 +6,38 @@ import Stepper from '@/components/stepper/Stepper';
 import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import { KelolaData } from '@/app/(main)/(landing-page)/kelola/data/Kelola.data';
 import KelolaContent from '@/app/(main)/(landing-page)/kelola/components/KelolaContent';
+import { useBusinessRecommendation } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { IKelolaForm } from '@/app/(main)/(landing-page)/kelola/type/Kelola.type';
 
 export default function KelolaPage() {
   const { currentStep, next, goToStep } = useStepper({
     totalSteps: KelolaData.length,
   });
+  const { onKelolaFinish, kelolaForm, loading } = useBusinessRecommendation();
 
-  const handleClick = () => {
-    alert('Fungsi belum diimplementasi 🚧');
-    return;
+  useEffect(() => {
+    if (loading) {
+      toast.loading('Sedang memproses rekomendasi...');
+    } else {
+      toast.dismiss();
+    }
+
+    return () => {
+      toast.dismiss();
+    };
+  }, [loading]);
+
+  const handleClickLastStep = async () => {
+    const payload: IKelolaForm = kelolaForm.getValues();
+
+    try {
+      await onKelolaFinish(payload.cash, payload.omzet);
+    } catch (error) {
+      toast.error('Gagal memuat rekomendasi bisnis');
+      return;
+    }
   };
 
   const stepContents = KelolaData.map((data, index) => (
@@ -22,7 +45,7 @@ export default function KelolaPage() {
       key={data.id}
       onNext={next}
       isLastStep={index === KelolaData.length - 1}
-      handleClickLastStep={handleClick}
+      handleClickLastStep={handleClickLastStep}
       {...data}
     />
   ));
