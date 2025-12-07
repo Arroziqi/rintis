@@ -12,4 +12,8 @@ export const API_ENDPOINTS = {
   DAILYINSIGHT: '/getInsight',
   GET_BUSINESS_RECOMMENDATIONS: '/getRekomendasiBisnis',
   GETCHARTDATA: '/getDataBar',
+  GETITEMLIST: '/getItemList',
+  INTEGRATIONEXPENSES: '/integrationExpense',
+  DELETEITEMLIST: '/deleteItem',
+  UPSERTITEMLIST: '/upsertDataItem',
 } as const;
