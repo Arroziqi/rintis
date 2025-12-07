@@ -1,21 +1,19 @@
-import { BusinessRecommendationRepositoryPort } from '@/lib/feature/businessRecommendation/port/BusinessRecommendation.repository.port';
-import {
-  IGetBusinessRecommendationRequest,
-  IGetBusinessRecommendationResponse,
-} from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
 import { api } from '@/lib/common/api/axios.instance';
 import { API_ENDPOINTS } from '@/core/config/api.config';
 import { parseAxiosError } from '@/lib/common/error/parseAxiosError';
+import { ItemRecommendationRepositoryPort } from '@/lib/feature/itemRecommendation/port/ItemRecommendation.repository.port';
+import {
+  IGetItemRecommendationRequest,
+  IGetItemRecommendationResponse,
+} from '@/lib/feature/itemRecommendation/presentation/dto/GetItemRecommendation.dto';
 
-export class ItemRecommendationRepositoryPersistence implements BusinessRecommendationRepositoryPort {
+export class ItemRecommendationRepositoryPersistence implements ItemRecommendationRepositoryPort {
   async getAll(
-    request: IGetBusinessRecommendationRequest
-  ): Promise<IGetBusinessRecommendationResponse | null> {
+    request: IGetItemRecommendationRequest
+  ): Promise<IGetItemRecommendationResponse | null> {
     try {
       console.log('request', request);
-      return await api.get(API_ENDPOINTS.GET_BUSINESS_RECOMMENDATIONS, {
-        params: request,
-      });
+      return await api.post(API_ENDPOINTS.GET_ITEM_RECOMMENDATIONS, request);
     } catch (err) {
       throw parseAxiosError(
         err,

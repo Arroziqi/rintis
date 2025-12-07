@@ -1,25 +1,17 @@
-import { BusinessRecommendationRepositoryPort } from '@/lib/feature/businessRecommendation/port/BusinessRecommendation.repository.port';
-import {
-  IGetBusinessRecommendationRequest,
-  IGetBusinessRecommendationResponse,
-} from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
 import { api } from '@/lib/common/api/axios.instance';
 import { API_ENDPOINTS } from '@/core/config/api.config';
 import { parseAxiosError } from '@/lib/common/error/parseAxiosError';
+import { InsertTransactionRepositoryPort } from '@/lib/feature/insertTransaction/port/InsertTransaction.repository.port';
+import { InsertTransactionRequest } from '@/lib/feature/insertTransaction/presentation/dto/InsertTransaction.dto';
 
-export class InsertTransactionRepositoryPersistence implements BusinessRecommendationRepositoryPort {
-  async getAll(
-    request: IGetBusinessRecommendationRequest
-  ): Promise<IGetBusinessRecommendationResponse | null> {
+export class InsertTransactionRepositoryPersistence implements InsertTransactionRepositoryPort {
+  async insertTransaction(
+    request: InsertTransactionRequest[]
+  ): Promise<string | null> {
     try {
-      return await api.post(API_ENDPOINTS.GET_BUSINESS_RECOMMENDATIONS, {
-        data: request,
-      });
+      return await api.post(API_ENDPOINTS.INSERT_TRANSAKSI, request);
     } catch (err) {
-      throw parseAxiosError(
-        err,
-        'Gagal memuat rekomendasi bisnis. Coba lagi nanti.'
-      );
+      throw parseAxiosError(err, 'Gagal memasukan transaksi. Coba lagi nanti.');
     }
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Card from '@/components/Card';
 import { MultipleLineChart } from '@/components/chart/MultipleLineChart';
 import { Chip } from '@/components/Chip';
@@ -14,13 +14,13 @@ import { getUserInfoAction } from '@/lib/feature/user/user.action';
 import {
   Brain,
   EllipsisVertical,
+  Loader2,
   PlusIcon,
+  RefreshCw,
+  ThumbsDown,
+  ThumbsUp,
   TrendingDown,
   TrendingUp,
-  Loader2,
-  ThumbsUp,
-  ThumbsDown,
-  RefreshCw,
 } from 'lucide-react';
 import { UserInfo } from '@/types/UserInfoTypes';
 import { getBalanceAction } from '@/lib/feature/balance/balance.action';
@@ -29,6 +29,7 @@ import { fetchDailyInsight } from '@/lib/feature/insight/insight.data';
 import { DailyInsight } from '@/types/DailyInsightTypes';
 import { fetchChartData } from '@/lib/feature/chartData/chart.data';
 import ChartData from '@/types/ChartTypes';
+import { localStorageFlowUtils } from '@/common/utils/localStorageFlow';
 
 export default function DashboardPage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -103,6 +104,17 @@ export default function DashboardPage() {
     } else {
       setIsLoading(false);
     }
+
+    // to check whether the user has selected the business before logging in
+    const flow = localStorageFlowUtils.getFlow();
+    if (!flow) return;
+
+    fetch('/api/flow/execute', {
+      method: 'POST',
+      body: JSON.stringify(flow),
+    }).then(() => {
+      localStorageFlowUtils.clearFlow();
+    });
   }, []);
 
   const displayName = userInfo?.name || 'User';

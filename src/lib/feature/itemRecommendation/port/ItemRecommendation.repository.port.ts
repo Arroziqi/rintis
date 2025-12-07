@@ -1,10 +1,10 @@
 import {
-  IGetBusinessRecommendationRequest,
-  IGetBusinessRecommendationResponse,
-} from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
+  IGetItemRecommendationRequest,
+  IGetItemRecommendationResponse,
+} from '@/lib/feature/itemRecommendation/presentation/dto/GetItemRecommendation.dto';
 
 export interface ItemRecommendationRepositoryPort {
   getAll(
-    request: IGetBusinessRecommendationRequest
-  ): Promise<IGetBusinessRecommendationResponse | null>;
+    request: IGetItemRecommendationRequest
+  ): Promise<IGetItemRecommendationResponse | null>;
 }

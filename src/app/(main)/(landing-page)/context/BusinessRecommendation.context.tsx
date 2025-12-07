@@ -1,3 +1,5 @@
+'use client';
+
 import {
   createContext,
   ReactNode,
@@ -8,21 +10,27 @@ import {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { IGetBusinessRecommendationPayload } from '@/lib/feature/businessRecommendation/presentation/schema/GetBusinessRecommendation.schema';
-import { IGetBusinessRecommendationResponse } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
+import {
+  IBusinessRecommendation,
+  IGetBusinessRecommendationResponse,
+} from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
 import { BusinessRecommendationContextType } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context.type';
 import { parseAxiosError } from '@/lib/common/error/parseAxiosError';
 import { getBusinessRecommendationUsecase } from '@/lib/feature/businessRecommendation/usecase/Get/GetBusinessRecommendation.usecase.instance';
+import { getInsertTransactionUsecase } from '@/lib/feature/insertTransaction/usecase/Insert/InsertTransaction.usecase.instance';
+import { InsertTransactionPayload } from '@/lib/feature/insertTransaction/presentation/schema/InsertTransaction.schema';
+import { formatDateToYMD } from '@/common/utils/formatDate';
+import { IGetItemRecommendationPayload } from '@/lib/feature/itemRecommendation/presentation/schema/GetItemRecommendation.schema';
+import { getItemRecommendationUsecase } from '@/lib/feature/itemRecommendation/usecase/Get/GetItemRecommendation.usecase.instance';
+import { isAuthenticated } from '@/lib/auth';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { localStorageFlowUtils } from '@/common/utils/localStorageFlow';
 
-// ---------------------------------------------
-// Context
-// ---------------------------------------------
 const BusinessRecommendationContext = createContext<
   BusinessRecommendationContextType | undefined
 >(undefined);
 
-// ---------------------------------------------
-// Provider
-// ---------------------------------------------
 export function BusinessRecommendationProvider({
   children,
 }: Readonly<{
@@ -34,9 +42,9 @@ export function BusinessRecommendationProvider({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const router = useRouter();
   const usecase = getBusinessRecommendationUsecase;
 
-  // React Hook Form
   const form = useForm<IGetBusinessRecommendationPayload>({
     defaultValues: {
       businessModel: '',
@@ -46,21 +54,22 @@ export function BusinessRecommendationProvider({
     },
   });
 
-  // SUBMIT HANDLER
   const onSubmit = useCallback(
-    async (payload: IGetBusinessRecommendationPayload) => {
+    async (payload: IGetBusinessRecommendationPayload): Promise<boolean> => {
       setLoading(true);
       setError(null);
 
       try {
         const result = await usecase.execute(payload);
         setData(result);
+        return true;
       } catch (err: unknown) {
         const parsedError = parseAxiosError(
           err,
           'Gagal memuat rekomendasi bisnis'
         );
         setError(parsedError.message);
+        return false;
       } finally {
         setLoading(false);
       }
@@ -68,7 +77,65 @@ export function BusinessRecommendationProvider({
     [usecase]
   );
 
-  // Memoized value
+  const onChooseBusiness = useCallback(
+    async (
+      payload: IGetBusinessRecommendationPayload,
+      recommendation: IBusinessRecommendation
+    ) => {
+      setLoading(true);
+      setError(null);
+
+      const insertTransactionPayload: InsertTransactionPayload = {
+        amount: Number(payload.budget),
+        desc: 'Pendapatan harian',
+        date: formatDateToYMD(new Date()),
+        type: 4,
+      };
+
+      const getItemRecommendationPayload: IGetItemRecommendationPayload = {
+        budget: payload.budget,
+        businessType: recommendation.nama_bisnis,
+      };
+
+      const isLoggedIn = await isAuthenticated();
+
+      if (!isLoggedIn) {
+        toast.error(
+          '⚠️ Kamu harus login dulu untuk melanjutkan. Tapi tenang, data bisnismu akan tetap kesimpan kok 🤗'
+        );
+
+        localStorageFlowUtils.setFlow({
+          insertTransactionPayload,
+          getItemRecommendationPayload,
+        });
+
+        setTimeout(() => {
+          router.push('/login');
+        }, 800);
+
+        setLoading(false);
+        return;
+      }
+
+      try {
+        await getInsertTransactionUsecase.execute([insertTransactionPayload]);
+        await getItemRecommendationUsecase.execute(
+          getItemRecommendationPayload
+        );
+        router.push('/dashboard');
+      } catch (err: unknown) {
+        const parsedError = parseAxiosError(
+          err,
+          'Gagal memilih rekomendasi bisnis'
+        );
+        setError(parsedError.message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [getItemRecommendationUsecase, getInsertTransactionUsecase]
+  );
+
   const value = useMemo(
     () => ({
       form,
@@ -76,8 +143,9 @@ export function BusinessRecommendationProvider({
       loading,
       error,
       onSubmit,
+      onChooseBusiness,
     }),
-    [form, data, loading, error, onSubmit]
+    [form, data, loading, error, onSubmit, onChooseBusiness]
   );
 
   return (
@@ -87,9 +155,6 @@ export function BusinessRecommendationProvider({
   );
 }
 
-// ---------------------------------------------
-// Hook
-// ---------------------------------------------
 export function useBusinessRecommendation() {
   const ctx = useContext(BusinessRecommendationContext);
   if (!ctx) {

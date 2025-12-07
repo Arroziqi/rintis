@@ -9,17 +9,38 @@ import { StyledFlex } from '@/components/common/styledFlexDiv/StyledFlexDiv';
 import { useBusinessRecommendation } from '@/app/(main)/(landing-page)/context/BusinessRecommendation.context';
 import { MulaiData } from '@/app/(main)/(landing-page)/mulai/data/Mulai.data';
 import { IGetBusinessRecommendationPayload } from '@/lib/feature/businessRecommendation/presentation/schema/GetBusinessRecommendation.schema';
+import toast from 'react-hot-toast';
+import { useEffect } from 'react';
 
 export default function MulaiPage() {
   const router = useRouter();
-  const { onSubmit, form } = useBusinessRecommendation();
+  const { onSubmit, form, loading } = useBusinessRecommendation();
   const { currentStep, next, goToStep } = useStepper({
     totalSteps: MulaiData.length,
   });
 
+  useEffect(() => {
+    if (loading) {
+      toast.loading('Sedang memproses rekomendasi...');
+    } else {
+      toast.dismiss();
+    }
+
+    return () => {
+      toast.dismiss();
+    };
+  }, [loading]);
+
   const handleLastStep = async () => {
     const payload: IGetBusinessRecommendationPayload = form.getValues();
-    await onSubmit(payload);
+
+    const success = await onSubmit(payload);
+
+    if (!success) {
+      toast.error('Gagal memuat rekomendasi bisnis');
+      return;
+    }
+
     router.push('/hasil');
   };
 

@@ -1,4 +1,4 @@
-import { BusinessRecommendationRepositoryPersistence } from '@/lib/feature/businessRecommendation/adapter/persistence/BusinessRecommendation.repository.persistence';
+import { InsertTransactionRepositoryPersistence } from '@/lib/feature/insertTransaction/adapter/persistence/InsertTransaction.repository.persistence';
 
-export const businessRecommendationRepository =
-  new BusinessRecommendationRepositoryPersistence();
+export const insertTransactionRepository =
+  new InsertTransactionRepositoryPersistence();

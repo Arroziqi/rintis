@@ -1,13 +1,18 @@
-import { IGetBusinessRecommendationRequest } from '@/lib/feature/businessRecommendation/presentation/dto/GetBusinessRecommendation.dto';
-import { IGetBusinessRecommendationPayload } from '@/lib/feature/businessRecommendation/presentation/schema/GetBusinessRecommendation.schema';
+import {
+  IGetItemRecommendationResponse,
+  IGetItemRecommendationResponseRaw,
+} from '@/lib/feature/itemRecommendation/presentation/dto/GetItemRecommendation.dto';
 
-export const mapBusinessRecommendationPayloadToRequest = (
-  payload: IGetBusinessRecommendationPayload
-): IGetBusinessRecommendationRequest => {
+export function mapItemRecommendationResponse(
+  raw: IGetItemRecommendationResponseRaw
+): IGetItemRecommendationResponse {
   return {
-    business_model: payload.businessModel,
-    budget: payload.budget,
-    hour: payload.hour,
-    location: payload.location,
+    responseCode: raw.response_code,
+    items: raw.data.items.map((item) => ({
+      itemName: item['item name'],
+      description: item.description,
+      estimatedPrices: item['estimated prices'],
+      sourceOfPriceData: item['source of price data'],
+    })),
   };
-};
+}
