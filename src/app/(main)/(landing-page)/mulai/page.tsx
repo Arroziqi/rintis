@@ -19,7 +19,6 @@ export default function MulaiPage() {
 
   const handleLastStep = async () => {
     const payload: IGetBusinessRecommendationPayload = form.getValues();
-    console.log('payload', payload);
     await onSubmit(payload);
     router.push('/hasil');
   };
