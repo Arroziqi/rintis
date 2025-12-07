@@ -7,13 +7,13 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function fetchUserInfo(): Promise<UserInfo | null> {
+  const token = await getAuthToken();
+
+  if (!token) {
+    return null;
+  }
+
   try {
-    const token = await getAuthToken();
-
-    if (!token) {
-      return null;
-    }
-
     const url = `${API_BASE_URL}${API_ENDPOINTS.USERINFO}`;
 
     const response = await fetch(url, {
