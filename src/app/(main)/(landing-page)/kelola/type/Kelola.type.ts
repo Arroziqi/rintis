@@ -5,6 +5,7 @@ export interface KelolaStepType {
   type?: 'input' | 'none';
   field?: 'cash' | 'omzet';
   placeholder?: string;
+  inputType?: 'string' | 'number';
 }
 
 export interface IKelolaForm {

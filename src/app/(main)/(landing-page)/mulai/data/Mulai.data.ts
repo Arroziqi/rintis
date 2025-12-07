@@ -7,8 +7,9 @@ export const MulaiData: MulaiStepType[] = [
     title: 'Ayo kita mulai,',
     description: 'Pertama, kita perlu tau berapa modal yang siap kamu gunakan',
     field: 'budget',
-    placeholder: 'Pastikan ini bukan uang untuk kebutuhan sehari-hari ya!',
+    placeholder: 'Wajib angka yaa',
     type: 'input',
+    inputType: 'number',
   },
   {
     id: 2,

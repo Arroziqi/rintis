@@ -29,6 +29,7 @@ function KelolaContent({
         <StyledOutlineInput
           placeholder={props.placeholder}
           {...register(props.field!)}
+          type={props.inputType}
         />
       );
     }

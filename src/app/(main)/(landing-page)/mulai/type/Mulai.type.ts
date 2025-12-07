@@ -7,4 +7,5 @@ export interface MulaiStepType {
   field: keyof IGetBusinessRecommendationPayload;
   placeholder?: string;
   type: 'input' | 'tags' | 'select';
+  inputType?: 'string' | 'number';
 }
